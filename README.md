@@ -1,138 +1,96 @@
-# AutoScale-AI-Systems
-🧠 AutoScale AI Systems
+🧠 NeuroScope.ai
 
-AutoScale AI Systems builds and deploys fully automated AI-driven business systems that generate income passively.
-This repository powers the official business website — generated, updated, and deployed automatically via n8n and OpenAI.
+Intelligence Evolved.
+NeuroScope.ai builds next-generation autonomous systems that learn, adapt, and evolve — combining design, cognition, and automation into one intelligent digital framework.
 
-🚀 Overview
+⚙️ Overview
 
-This project uses an autonomous n8n workflow to generate, publish, and maintain a professional HTML5 business website for AutoScale AI Systems.
-Each time the workflow runs:
-
-AI (OpenAI/GPT) writes new, SEO-optimized website content.
-
-n8n Base64 Node encodes the generated HTML for GitHub.
-
-GitHub Node commits the updated index.html file to the main branch.
-
-GitHub Pages (or Netlify) automatically redeploys the live website.
-
-Result:
-A self-updating website that evolves automatically — no manual edits required.
+This repository powers the official NeuroScope.ai website — an adaptive, AI-generated landing experience created and maintained through Base44 and n8n automation.
+Each update dynamically rebuilds the site using OpenAI-driven content, ensuring it evolves with every deployment.
 
 🧩 System Architecture
 
 Workflow Chain:
 
-Trigger (manual/cron/webhook)
-→ OpenAI Node (generate webpage HTML)
-→ Base64 Node (encode HTML)
-→ GitHub Node (create/update index.html)
-→ Google Drive Node (optional backup)
-→ Slack/Email Node (notify deployment)
+Trigger → OpenAI Node (Generate HTML/CSS)  
+        → Base64 Encoder (Prepare GitHub Push)  
+        → GitHub Node (Commit index.html)  
+        → Visual Assets (Neural Mesh / Animations)  
+        → Optional Notification Node (Slack / Email)
 
 
 Deployment:
 
-GitHub Pages URL → https://<your-username>.github.io/<repository-name>/
+GitHub Pages: https://mujtabataimur.github.io/neuroscope.ai/
 
-Netlify (optional) → linked to this repo for continuous deployment
+Optional Netlify Sync: Continuous redeploy after every commit
 
-⚙️ Setup Instructions
-1. GitHub Configuration
+🧠 Design Language
+Element	Spec
+Theme	Dark minimalism / Neural gradient glow
+Fonts	Sora (headlines), Inter (body)
+Colors	Base #0f0f14 · Accent #2b59ff · Glow #7b3eff
+Motion	Subtle neural pulse and light drift
+🧠 Core Pages
 
-Create a new GitHub repository or use an existing one.
+Home.html — Hero landing page (“Intelligence Evolved”)
 
-Go to Settings → Pages → Source → choose main branch → / (root) folder.
+About.html — Vision, team, and philosophy
 
-Copy your repository details for the n8n GitHub Node:
+Solutions.html — AI systems overview
 
-Owner: <your-username>
+Pricing.html — Tiers and SumUp integration
 
-Repository: <repo-name>
+Contact.html — Secure waitlist form
 
-Branch: main
+Blog.html — AI-generated articles and updates
 
-2. n8n Workflow Configuration
+🔒 Paywall / Subscription Model
 
-In n8n:
+Defined in Subscription.json
 
-Node	Purpose	Credentials Required
-Trigger	Manual, schedule, or webhook start	—
-OpenAI	Generate webpage HTML	OpenAI API Key
-Base64 Encode	Format HTML for GitHub	—
-GitHub	Commit file (index.html)	GitHub Personal Access Token (scope: repo)
-Google Drive (optional)	Backup generated HTML	Google OAuth2
-Slack / Gmail (optional)	Send deploy notifications	Slack Bot Token / Gmail OAuth2
+{
+  "tier": "free | one_time | monthly",
+  "status": "active | expired | cancelled",
+  "amount_paid": 0
+}
 
-After saving, click Execute Workflow to test your first deployment.
 
-3. GitHub Personal Access Token
+Integrated with SumUp Checkout and optional PayPal fallback.
 
-Create one with:
+🧠 Automation Summary
 
-Scope: repo
+AI Writer: Regenerates copy and SEO metadata automatically.
 
-Go to https://github.com/settings/tokens
+n8n Workflow: Pushes new site builds to GitHub on trigger.
 
-Paste token into n8n GitHub credentials setup.
+Base44 Firewall: Restricts premium content until verified payment.
 
-4. Enable GitHub Pages
+🚀 Setup
 
-After your first commit (which creates index.html):
+Fork or clone this repo.
 
-Go to Settings → Pages.
+Enable GitHub Pages → Settings → Pages → Source: main branch.
 
-Set Source = Deploy from a branch.
+Connect to Base44/n8n using your credentials:
 
-Branch = main, Folder = / (root) or /docs if used.
+OPENAI_API_KEY
 
-Wait a minute, then visit:
+GITHUB_TOKEN
 
-https://<username>.github.io/<repository-name>/
+(Optional) SUMUP_API_KEY
 
-🧠 Automation Logic
+Run workflow → site regenerates and deploys automatically.
 
-Each week (or on demand):
+📡 Future Roadmap
 
-AI regenerates content (business updates, testimonials, pricing).
+Integrate real-time AI dashboard.
 
-Workflow commits automatically with message:
+Add interactive neural animation layer.
 
-Auto-generated site update – YYYY-MM-DD
-
-Website redeploys instantly.
-
-This makes your site self-maintaining and growth-focused.
-
-🔒 Environment Variables (recommended)
-Variable	Description
-OPENAI_API_KEY	AI content generator
-GITHUB_TOKEN	Access to push commits
-GOOGLE_DRIVE_ID	Optional content backup
-SLACK_CHANNEL_ID	Optional deploy alerts
-🧩 Example Automation Schedule
-Task	Frequency	Trigger
-Webpage Regeneration	Weekly	Cron Node
-Backup to Drive	Each run	Automatic
-Deployment Notification	Each run	Slack Node
-🌍 Live Demo (Example)
-
-https://autoscale-ai-systems.github.io/website-demo/
+Implement API-based subscription sync (Base44 ↔ SumUp).
 
 🧾 License
 
-This project is released under the MIT License.
-You’re free to copy, modify, or reuse this automation workflow for commercial or personal use.
-
-❤️ Credits
-
-Built with:
-
-n8n.io
-
-OpenAI API
-
-GitHub Pages
-
-AutoScale AI Systems
+© 2025 NeuroScope.ai — All Rights Reserved.
+Unauthorized reproduction or redistribution is prohibited.
