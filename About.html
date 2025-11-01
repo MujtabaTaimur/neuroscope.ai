@@ -1,0 +1,192 @@
+import React from "react";
+import { Target, Lightbulb, Users, Brain } from "lucide-react";
+
+export default function About() {
+  return (
+    <div className="relative bg-gradient-to-b from-[#050810] to-[#0a0e1a]">
+      {/* Hero Section */}
+      <section className="relative py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-[#00d4ff] bg-clip-text text-transparent">
+                About NeuroScopes
+              </span>
+            </h1>
+            <p className="text-2xl text-white/70 leading-relaxed">
+              We're building the future of autonomous intelligence — one system at a time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Vision */}
+      <section className="relative py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#00d4ff]/10 border border-[#00d4ff]/20 mb-6">
+                <Target className="w-5 h-5 text-[#00d4ff]" />
+                <span className="text-sm font-medium text-[#00d4ff]">Our Vision</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                To expand human potential through <span className="bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent">adaptive intelligence</span>
+              </h2>
+              <p className="text-lg text-white/70 leading-relaxed mb-6">
+                We believe the next leap in human capability comes from AI systems that don't just execute — they think, learn, and evolve alongside us.
+              </p>
+              <p className="text-lg text-white/70 leading-relaxed">
+                Our vision is a world where businesses operate at the speed of insight, where automation doesn't replace creativity but amplifies it.
+              </p>
+            </div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] rounded-3xl blur-3xl opacity-20"></div>
+              <div className="relative p-12 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent mb-2">
+                      100+
+                    </div>
+                    <div className="text-sm text-white/60">AI Systems Built</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent mb-2">
+                      50+
+                    </div>
+                    <div className="text-sm text-white/60">Businesses Transformed</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent mb-2">
+                      24/7
+                    </div>
+                    <div className="text-sm text-white/60">Autonomous Operation</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent mb-2">
+                      10x
+                    </div>
+                    <div className="text-sm text-white/60">Efficiency Gains</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Approach */}
+      <section className="relative py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1 relative">
+              <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10">
+                <Brain className="w-16 h-16 text-[#00d4ff] mb-6" />
+                <h3 className="text-2xl font-bold mb-4">Neuroscience-Inspired Design</h3>
+                <p className="text-white/70 mb-6">
+                  We model our AI systems after biological neural networks — creating architectures that mirror the way humans process information and learn from experience.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#00d4ff] mt-2"></div>
+                    <span className="text-sm text-white/70">Pattern recognition through deep neural architectures</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#00d4ff] mt-2"></div>
+                    <span className="text-sm text-white/70">Memory systems that retain and recall insights</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#00d4ff] mt-2"></div>
+                    <span className="text-sm text-white/70">Adaptive learning that improves over time</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#8b5cf6]/10 border border-[#8b5cf6]/20 mb-6">
+                <Lightbulb className="w-5 h-5 text-[#8b5cf6]" />
+                <span className="text-sm font-medium text-[#8b5cf6]">Our Approach</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                We blend <span className="bg-gradient-to-r from-[#8b5cf6] to-[#00d4ff] bg-clip-text text-transparent">neuroscience</span>, automation, and scale
+              </h2>
+              <p className="text-lg text-white/70 leading-relaxed mb-6">
+                Our methodology combines three pillars: neuroscience-inspired design, automation logic, and scalable AI frameworks.
+              </p>
+              <p className="text-lg text-white/70 leading-relaxed">
+                This unique approach allows us to build systems that don't just process data — they understand context, predict outcomes, and continuously optimize.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Team */}
+      <section className="relative py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+              <Users className="w-5 h-5 text-[#00d4ff]" />
+              <span className="text-sm font-medium">Our Team</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              A network of engineers, designers, <br />
+              <span className="bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                and thinkers
+              </span>
+            </h2>
+            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+              Building the future of autonomous systems, one breakthrough at a time.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Team Category 1 */}
+            <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#00d4ff]/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center mb-6">
+                <Brain className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">AI Engineers</h3>
+              <p className="text-white/70">
+                Experts in machine learning, neural networks, and cognitive computing — architecting the intelligence layer.
+              </p>
+            </div>
+
+            {/* Team Category 2 */}
+            <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#00d4ff]/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#8b5cf6] to-[#00d4ff] flex items-center justify-center mb-6">
+                <Lightbulb className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">System Designers</h3>
+              <p className="text-white/70">
+                Creating intuitive interfaces and elegant architectures that make complex AI systems feel effortless.
+              </p>
+            </div>
+
+            {/* Team Category 3 */}
+            <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#00d4ff]/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center mb-6">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Strategic Thinkers</h3>
+              <p className="text-white/70">
+                Visionaries who connect AI capabilities to real-world business outcomes and transformative opportunities.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tagline Section */}
+      <section className="relative py-32">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+            NeuroScopes —
+          </h2>
+          <p className="text-4xl md:text-5xl bg-gradient-to-r from-[#00d4ff] via-[#8b5cf6] to-[#00d4ff] bg-clip-text text-transparent font-bold">
+            Intelligence Reimagined
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
