@@ -1,298 +1,148 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { createPageUrl } from "@/utils";
-import { Check, ArrowRight, Star, ChevronLeft, ChevronRight } from "lucide-react";
-
-export default function Pricing() {
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
-
-  const plans = [
-    {
-      name: "Starter",
-      price: "$199",
-      period: "/month",
-      description: "Perfect for teams exploring AI automation",
-      features: [
-        "1 automated workflow",
-        "AI-powered dashboard",
-        "Basic analytics & reporting",
-        "Email support",
-        "Community access",
-        "Monthly optimization reports"
-      ],
-      cta: "Start Free Trial",
-      popular: false
-    },
-    {
-      name: "Growth",
-      price: "$499",
-      period: "/month",
-      description: "For businesses scaling with intelligent systems",
-      features: [
-        "Full AI system integration",
-        "Advanced analytics suite",
-        "Priority support (24/7)",
-        "Custom workflow design",
-        "API access",
-        "Weekly strategy calls",
-        "Dedicated success manager"
-      ],
-      cta: "Get Started",
-      popular: true
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      period: "",
-      description: "Dedicated infrastructure for exponential growth",
-      features: [
-        "Unlimited workflows",
-        "On-demand intelligence",
-        "White-glove onboarding",
-        "Custom model training",
-        "SLA guarantees",
-        "Dedicated AI architects",
-        "Advanced security & compliance"
-      ],
-      cta: "Contact Sales",
-      popular: false
-    }
-  ];
-
-  const testimonials = [
-    {
-      quote: "Our AI reduced analysis time by 80%. We're now making decisions in minutes that used to take days.",
-      author: "Sarah Chen",
-      role: "CEO, DataFlow Systems",
-      rating: 5
-    },
-    {
-      quote: "NeuroScopes didn't just automate our workflows — it transformed how we think about growth.",
-      author: "Michael Rodriguez",
-      role: "CTO, Quantum Insights",
-      rating: 5
-    },
-    {
-      quote: "The self-learning capabilities are incredible. Our AI system gets smarter every single day.",
-      author: "Emily Thompson",
-      role: "VP Operations, TechVenture",
-      rating: 5
-    }
-  ];
-
-  const nextTestimonial = () => {
-    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  return (
-    <div className="relative bg-gradient-to-b from-[#050810] to-[#0a0e1a]">
-      {/* Hero Section */}
-      <section className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-white to-[#00d4ff] bg-clip-text text-transparent">
-                Simple, Transparent Pricing
-              </span>
-            </h1>
-            <p className="text-2xl text-white/70 leading-relaxed">
-              Choose the plan that scales with your intelligence ambitions
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Cards */}
-      <section className="relative py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative p-8 rounded-3xl backdrop-blur-sm transition-all duration-500 ${
-                  plan.popular
-                    ? 'bg-gradient-to-b from-white/10 to-white/5 border-2 border-[#00d4ff] scale-105 neural-glow'
-                    : 'bg-white/5 border border-white/10 hover:border-white/20'
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] rounded-full text-sm font-semibold">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <p className="text-white/60 text-sm mb-6">{plan.description}</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent">
-                      {plan.price}
-                    </span>
-                    {plan.period && (
-                      <span className="text-white/60">{plan.period}</span>
-                    )}
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[#00d4ff] flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  to={createPageUrl("Contact")}
-                  className={`block w-full py-3 px-6 rounded-xl font-semibold text-center transition-all ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] neural-glow-hover'
-                      : 'bg-white/10 hover:bg-white/20'
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          {/* Trust Badge */}
-          <div className="mt-16 text-center">
-            <p className="text-white/60 mb-4">Trusted by forward-thinking companies worldwide</p>
-            <div className="flex justify-center gap-8 flex-wrap">
-              <div className="text-white/40 font-semibold">TechCorp</div>
-              <div className="text-white/40 font-semibold">DataFlow</div>
-              <div className="text-white/40 font-semibold">Quantum</div>
-              <div className="text-white/40 font-semibold">NexGen</div>
-              <div className="text-white/40 font-semibold">FutureScale</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Slider */}
-      <section className="relative py-20">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">
-              What Our <span className="bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent">Clients</span> Say
-            </h2>
-          </div>
-
-          <div className="relative">
-            <div className="p-12 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10">
-              {/* Stars */}
-              <div className="flex justify-center gap-1 mb-6">
-                {[...Array(testimonials[testimonialIndex].rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-[#00d4ff] text-[#00d4ff]" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-xl text-white/90 text-center mb-8 leading-relaxed">
-                "{testimonials[testimonialIndex].quote}"
-              </p>
-
-              {/* Author */}
-              <div className="text-center">
-                <div className="font-semibold text-lg mb-1">
-                  {testimonials[testimonialIndex].author}
-                </div>
-                <div className="text-white/60 text-sm">
-                  {testimonials[testimonialIndex].role}
-                </div>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-center gap-4 mt-8">
-              <button
-                onClick={prevTestimonial}
-                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setTestimonialIndex(i)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    i === testimonialIndex
-                      ? 'w-8 bg-[#00d4ff]'
-                      : 'bg-white/30'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form Section */}
-      <section className="relative py-20">
-        <div className="max-w-2xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">
-              Need a <span className="bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] bg-clip-text text-transparent">Custom Solution</span>?
-            </h2>
-            <p className="text-white/70 text-lg">
-              Let's engineer a plan tailored to your unique requirements
-            </p>
-          </div>
-
-          <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <Link
-              to={createPageUrl("Contact")}
-              className="flex items-center justify-between p-6 rounded-xl bg-gradient-to-r from-[#00d4ff]/10 to-[#8b5cf6]/10 border border-[#00d4ff]/20 hover:border-[#00d4ff]/50 transition-all group"
-            >
-              <div>
-                <h3 className="text-xl font-bold mb-2">Schedule a Consultation</h3>
-                <p className="text-white/70">Speak with our AI architects about your goals</p>
-              </div>
-              <ArrowRight className="w-6 h-6 text-[#00d4ff] group-hover:translate-x-2 transition-transform" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Preview */}
-      <section className="relative py-20">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Common Questions
-          </h2>
-          <div className="space-y-4">
-            {[
-              { q: "Can I switch plans later?", a: "Yes, upgrade or downgrade anytime with pro-rated billing." },
-              { q: "What's included in support?", a: "All plans include email support. Growth and Enterprise get priority 24/7 access." },
-              { q: "Is there a free trial?", a: "Yes, we offer a 14-day trial on Starter and Growth plans." }
-            ].map((faq) => (
-              <details
-                key={faq.q}
-                className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
-              >
-                <summary className="font-semibold cursor-pointer">{faq.q}</summary>
-                <p className="mt-4 text-white/70">{faq.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing - NeuroScope.ai</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg, #050810, #0a0e1a); color: white; min-height: 100vh; }
+    h1, h2, h3 { font-family: 'Sora', sans-serif; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+    .gradient-text { background: linear-gradient(90deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    section { padding: 5rem 0; }
+    .grid-3 { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .price-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; transition: all 0.3s; }
+    .price-card:hover { border-color: rgba(0, 212, 255, 0.5); transform: translateY(-4px); }
+    .price-card.popular { border: 2px solid #00d4ff; transform: scale(1.05); }
+    .btn { display: block; width: 100%; padding: 0.75rem; background: linear-gradient(90deg, #00d4ff, #8b5cf6); border: none; border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer; transition: opacity 0.3s; }
+    .btn:hover { opacity: 0.9; }
+    .testimonial { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 3rem; text-align: center; }
+    .nav-btn { padding: 0.75rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.75rem; cursor: pointer; transition: all 0.3s; }
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.1); }
+  </style>
+</head>
+<body>
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(5, 8, 16, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+      <a href="../index.html" style="font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: white; text-decoration: none; background: linear-gradient(90deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">neuroscope</a>
+      <div style="display: flex; gap: 2rem; align-items: center;">
+        <a href="../index.html" style="color: white; text-decoration: none; font-weight: 500;">Home</a>
+        <a href="About.html" style="color: white; text-decoration: none; font-weight: 500;">About</a>
+        <a href="Solutions.html" style="color: white; text-decoration: none; font-weight: 500;">Solutions</a>
+        <a href="Pricing.html" style="color: #00d4ff; text-decoration: none; font-weight: 500;">Pricing</a>
+        <a href="Blog.html" style="color: white; text-decoration: none; font-weight: 500;">Blog</a>
+        <a href="Contact.html" style="padding: 0.5rem 1.5rem; background: linear-gradient(90deg, #00d4ff, #8b5cf6); border-radius: 0.5rem; color: white; text-decoration: none; font-weight: 600;">Contact</a>
+      </div>
     </div>
-  );
-}
+  </nav>
+  <section style="padding-top: 8rem;">
+    <div class="container" style="max-width: 56rem; text-align: center;">
+      <h1 style="font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; margin-bottom: 1.5rem;">
+        <span class="gradient-text">Simple, Transparent Pricing</span>
+      </h1>
+      <p style="font-size: 1.5rem; color: rgba(255, 255, 255, 0.7);">Choose the plan that scales with your intelligence ambitions</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="grid-3">
+        <div class="price-card">
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Starter</h3>
+          <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem; margin-bottom: 1.5rem;">Perfect for teams exploring AI automation</p>
+          <div style="margin-bottom: 1.5rem;"><span class="gradient-text" style="font-size: 3rem; font-weight: 700;">$199</span><span style="color: rgba(255, 255, 255, 0.6);">/month</span></div>
+          <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem;">
+            <li style="margin-bottom: 0.5rem;">✓ 1 automated workflow</li>
+            <li style="margin-bottom: 0.5rem;">✓ AI-powered dashboard</li>
+            <li style="margin-bottom: 0.5rem;">✓ Basic analytics & reporting</li>
+            <li style="margin-bottom: 0.5rem;">✓ Email support</li>
+            <li style="margin-bottom: 0.5rem;">✓ Community access</li>
+          </ul>
+          <button class="btn" onclick="location.href='../index.html#contact'">Start Free Trial</button>
+        </div>
+
+        <div class="price-card popular">
+          <div style="background: linear-gradient(90deg, #00d4ff, #8b5cf6); color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-align: center; margin-bottom: 1rem;">Most Popular</div>
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Growth</h3>
+          <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem; margin-bottom: 1.5rem;">For businesses scaling with intelligent systems</p>
+          <div style="margin-bottom: 1.5rem;"><span class="gradient-text" style="font-size: 3rem; font-weight: 700;">$499</span><span style="color: rgba(255, 255, 255, 0.6);">/month</span></div>
+          <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem;">
+            <li style="margin-bottom: 0.5rem;">✓ Full AI system integration</li>
+            <li style="margin-bottom: 0.5rem;">✓ Advanced analytics suite</li>
+            <li style="margin-bottom: 0.5rem;">✓ Priority support (24/7)</li>
+            <li style="margin-bottom: 0.5rem;">✓ Custom workflow design</li>
+            <li style="margin-bottom: 0.5rem;">✓ API access</li>
+          </ul>
+          <button class="btn" onclick="location.href='../index.html#contact'">Get Started</button>
+        </div>
+
+        <div class="price-card">
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Enterprise</h3>
+          <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem; margin-bottom: 1.5rem;">Dedicated infrastructure for exponential growth</p>
+          <div style="margin-bottom: 1.5rem;"><span class="gradient-text" style="font-size: 3rem; font-weight: 700;">Custom</span></div>
+          <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem;">
+            <li style="margin-bottom: 0.5rem;">✓ Unlimited workflows</li>
+            <li style="margin-bottom: 0.5rem;">✓ On-demand intelligence</li>
+            <li style="margin-bottom: 0.5rem;">✓ White-glove onboarding</li>
+            <li style="margin-bottom: 0.5rem;">✓ Custom model training</li>
+            <li style="margin-bottom: 0.5rem;">✓ Dedicated AI architects</li>
+          </ul>
+          <button class="btn" onclick="location.href='../index.html#contact'">Contact Sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style="max-width: 56rem;">
+      <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem;">What Our <span class="gradient-text">Clients</span> Say</h2>
+      <div class="testimonial" id="testimonial">
+        <div style="margin-bottom: 1.5rem;">⭐⭐⭐⭐⭐</div>
+        <p id="quote" style="font-size: 1.25rem; margin-bottom: 2rem; color: rgba(255, 255, 255, 0.9);"></p>
+        <div id="author" style="font-weight: 600; margin-bottom: 0.5rem;"></div>
+        <div id="role" style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem;"></div>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <button class="nav-btn" onclick="prevTestimonial()">←</button>
+        <button class="nav-btn" onclick="nextTestimonial()">→</button>
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align: center; padding: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+    <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 0.5rem;">Contact: mtaimur@neuroscopes.org</p>
+    <a href="../index.html" style="color: #00d4ff; text-decoration: none;">← Back to Home</a>
+  </div>
+
+  <script>
+    const testimonials = [
+      { quote: "Our AI reduced analysis time by 80%. We're now making decisions in minutes that used to take days.", author: "Sarah Chen", role: "CEO, DataFlow Systems" },
+      { quote: "NeuroScopes didn't just automate our workflows — it transformed how we think about growth.", author: "Michael Rodriguez", role: "CTO, Quantum Insights" },
+      { quote: "The self-learning capabilities are incredible. Our AI system gets smarter every single day.", author: "Emily Thompson", role: "VP Operations, TechVenture" }
+    ];
+    let currentIndex = 0;
+
+    function updateTestimonial() {
+      document.getElementById('quote').textContent = '"' + testimonials[currentIndex].quote + '"';
+      document.getElementById('author').textContent = testimonials[currentIndex].author;
+      document.getElementById('role').textContent = testimonials[currentIndex].role;
+    }
+
+    function nextTestimonial() {
+      currentIndex = (currentIndex + 1) % testimonials.length;
+      updateTestimonial();
+    }
+
+    function prevTestimonial() {
+      currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+      updateTestimonial();
+    }
+
+    updateTestimonial();
+  </script>
+</body>
+</html>
+

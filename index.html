@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroScope.ai - Intelligence Evolved</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: #0f0f14;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Animations */
+    @keyframes neural-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    @keyframes glow-breath {
+      0%, 100% { box-shadow: 0 0 20px rgba(43, 89, 255, 0.2), 0 0 40px rgba(123, 62, 255, 0.1); }
+      50% { box-shadow: 0 0 30px rgba(43, 89, 255, 0.4), 0 0 60px rgba(123, 62, 255, 0.2); }
+    }
+
+    @keyframes float-in {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes text-shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .neural-pulse {
+      animation: neural-pulse 3s ease-in-out infinite;
+    }
+
+    .glow-breath {
+      animation: glow-breath 4s ease-in-out infinite;
+    }
+
+    .float-in {
+      animation: float-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .text-shimmer {
+      background: linear-gradient(90deg, #cfcfcf 0%, #ffffff 50%, #cfcfcf 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: text-shimmer 4s linear infinite;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #2b59ff, #7b3eff, #2b59ff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Layout */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+    }
+
+    section {
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .section-label {
+      letter-spacing: 0.15em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #cfcfcf;
+      margin-bottom: 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero p {
+      font-size: clamp(1.25rem, 3vw, 1.5rem);
+      color: #cfcfcf;
+      max-width: 48rem;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 2.5rem;
+      background: linear-gradient(90deg, #2b59ff, #7b3eff);
+      border: none;
+      border-radius: 1rem;
+      color: white;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      transition: transform 0.3s;
+    }
+
+    .btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover {
+      background: rgba(43, 89, 255, 0.05);
+      border-color: rgba(43, 89, 255, 0.3);
+      transform: translateY(-8px);
+    }
+
+    .card-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #2b59ff, #7b3eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .card:hover .card-icon {
+      transform: scale(1.1);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      color: #cfcfcf;
+      line-height: 1.6;
+    }
+
+    /* Form */
+    .form-container {
+      max-width: 42rem;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      padding: 3rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(43, 89, 255, 0.5);
+      box-shadow: 0 0 20px rgba(43, 89, 255, 0.2);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .success-icon {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2b59ff, #7b3eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .spinner {
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 4rem 2rem;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: #cfcfcf;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #2b59ff;
+      color: #2b59ff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="neuralCanvas"></canvas>
+
+  <!-- Navigation -->
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15, 15, 20, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+      <a href="index.html" style="font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: white; text-decoration: none; background: linear-gradient(90deg, #2b59ff, #7b3eff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">neuroscope</a>
+      <div style="display: flex; gap: 2rem; align-items: center;">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Home</a>
+        <a href="Pages/About.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">About</a>
+        <a href="Pages/Solutions.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Solutions</a>
+        <a href="Pages/Pricing.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Pricing</a>
+        <a href="Pages/Blog.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Blog</a>
+        <a href="#contact" style="padding: 0.5rem 1.5rem; background: linear-gradient(90deg, #2b59ff, #7b3eff); border-radius: 0.5rem; color: white; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content" style="padding-top: 80px;">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div>
+        <div class="section-label float-in" style="animation-delay: 0.1s;">
+          neuroscope · Autonomous Intelligence
+        </div>
+        <h1 class="float-in" style="animation-delay: 0.2s;">
+          <div class="text-shimmer">INTELLIGENCE</div>
+          <div class="gradient-text">EVOLVED</div>
+        </h1>
+        <p class="float-in" style="animation-delay: 0.4s;">
+          Autonomous systems that learn, adapt, and grow.
+        </p>
+        <button class="btn glow-breath float-in" style="animation-delay: 0.6s;" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">
+          Join the Waitlist
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section>
+      <div style="max-width: 1400px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 5rem; align-items: center;">
+          <div>
+            <div class="section-label">Philosophy</div>
+            <h2 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 2rem; line-height: 1.2;">
+              We build AI that <br>
+              <span class="gradient-text">sees beyond data</span>
+            </h2>
+            <p style="font-size: 1.125rem; color: #cfcfcf; line-height: 1.6;">
+              Intelligence isn't just about processing information — it's about understanding context, predicting outcomes, and evolving autonomously. We design systems that think.
+            </p>
+          </div>
+          <div style="position: relative; height: 24rem; display: flex; align-items: center; justify-content: center;">
+            <div class="neural-pulse" style="width: 16rem; height: 16rem; border-radius: 50%; background: linear-gradient(135deg, #2b59ff, #7b3eff); opacity: 0.2; filter: blur(60px);"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section>
+      <div style="max-width: 1400px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 4rem;">
+          <div class="section-label">Core Systems</div>
+          <h2 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700;">
+            <span class="gradient-text">Technology Stack</span>
+          </h2>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+              </svg>
+            </div>
+            <h3>Cognitive Automation</h3>
+            <p>Self-learning workflows that adapt to changing conditions and optimize themselves in real-time.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <h3>Adaptive Learning</h3>
+            <p>Neural architectures that continuously improve through pattern recognition and experience accumulation.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="16" y="16" width="6" height="6" rx="1"/>
+                <rect x="2" y="16" width="6" height="6" rx="1"/>
+                <rect x="9" y="2" width="6" height="6" rx="1"/>
+                <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/>
+              </svg>
+            </div>
+            <h3>Autonomous Infrastructure</h3>
+            <p>Distributed systems that scale, heal, and maintain themselves without human intervention.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section style="padding: 10rem 2rem; position: relative;">
+      <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent, rgba(43, 89, 255, 0.05), transparent);"></div>
+      <div style="max-width: 80rem; margin: 0 auto; text-align: center; position: relative; z-index: 10;">
+        <div class="section-label">Vision</div>
+        <blockquote style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.3;">
+          <span style="background: linear-gradient(90deg, #cfcfcf, white, #cfcfcf); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            "The future <br>
+            <span class="gradient-text">thinks for itself</span>"
+          </span>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="form-container glow-breath">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+          <div class="section-label">Access</div>
+          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+            <span class="gradient-text">Join the Network</span>
+          </h2>
+          <p style="color: #cfcfcf;">Early access opens February 25, 2026</p>
+        </div>
+
+        <form id="waitlistForm" style="display: block;">
+          <div class="form-group">
+            <input type="text" id="name" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" placeholder="Your Email" required>
+          </div>
+          <button type="submit" class="btn" style="width: 100%; justify-content: center;">
+            Request Access
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </form>
+
+        <div id="successMessage" class="success-message" style="display: none;">
+          <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+          <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Neural Link Established</h3>
+          <p style="color: #cfcfcf; font-size: 1.125rem;">You're in the network. We'll contact you at launch.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div>
+          <div class="section-label" style="margin-bottom: 0.5rem;">
+            neuroscope · London · EST 2024
+          </div>
+          <div style="font-size: 0.875rem; color: rgba(207, 207, 207, 0.6);">
+            Autonomous intelligence systems
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="https://www.instagram.com/neuroscopes.ai/" target="_blank" class="social-link" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+       
+          <a href="https://github.com/MujtabaTaimur" target="_blank" class="social-link" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
+        <p style="font-size: 0.75rem; color: rgba(207, 207, 207, 0.4);">
+          © 2026 neuroscope. All rights reserved. · Contact: mtaimur@neuroscopes.org
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Neural Canvas Animation
+    const canvas = document.getElementById('neuralCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Mouse tracking
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Neural nodes
+    class NeuralNode {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.2;
+        this.vy = (Math.random() - 0.5) * 0.2;
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.02 + Math.random() * 0.01;
+        this.baseOpacity = Math.random() * 0.3 + 0.2;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 100) {
+          const force = (1 - dist / 100) * 0.05;
+          this.x += dx * force;
+          this.y += dy * force;
+        }
+
+        this.pulsePhase += this.pulseSpeed;
+      }
+
+      draw() {
+        const pulse = Math.sin(this.pulsePhase) * 0.5 + 0.5;
+        const opacity = this.baseOpacity + pulse * 0.3;
+        
+        const color = pulse > 0.5 ? 
+          `rgba(43, 89, 255, ${opacity})` : 
+          `rgba(123, 62, 255, ${opacity})`;
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    const nodes = [];
+    for (let i = 0; i < 80; i++) {
+      nodes.push(new NeuralNode());
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(15, 15, 20, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      nodes.forEach((node, i) => {
+        node.update();
+        node.draw();
+
+        nodes.slice(i + 1).forEach(other => {
+          const dx = node.x - other.x;
+          const dy = node.y - other.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 200) {
+            const opacity = (1 - distance / 200) * 0.15;
+            const gradient = ctx.createLinearGradient(node.x, node.y, other.x, other.y);
+            gradient.addColorStop(0, `rgba(43, 89, 255, ${opacity})`);
+            gradient.addColorStop(1, `rgba(123, 62, 255, ${opacity})`);
+            
+            ctx.beginPath();
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(other.x, other.y);
+            ctx.stroke();
+          }
+        });
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Form submission
+    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      // Simple form handling (you can replace this with actual API call)
+      console.log('Waitlist submission:', { name, email });
+      
+      // Show success message
+      document.getElementById('waitlistForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+      
+      // Reset form
+      setTimeout(() => {
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
+

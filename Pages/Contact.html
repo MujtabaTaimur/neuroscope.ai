@@ -1,277 +1,122 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Mail, MapPin, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { base44 } from "@/api/base44Client";
-import { toast } from "sonner";
-
-export default function Contact() {
-  const canvasRef = useRef(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    message: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Animated background
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    const particles = [];
-    const particleCount = 50;
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.size = Math.random() * 2 + 1;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 212, 255, 0.4)';
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-
-    function animate() {
-      ctx.fillStyle = 'rgba(5, 8, 16, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    const handleResize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      await base44.integrations.Core.SendEmail({
-        to: "hello@neuroscopes.com",
-        subject: `New Contact Form Submission from ${formData.name}`,
-        body: `
-          Name: ${formData.name}
-          Email: ${formData.email}
-          Company: ${formData.company}
-          
-          Message:
-          ${formData.message}
-        `
-      });
-
-      toast.success("Message sent successfully! We'll get back to you within 24 hours.");
-      setFormData({ name: "", email: "", company: "", message: "" });
-    } catch (error) {
-      toast.error("Failed to send message. Please try again.");
-    }
-
-    setIsSubmitting(false);
-  };
-
-  return (
-    <div className="relative bg-gradient-to-b from-[#050810] to-[#0a0e1a] min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-white to-[#00d4ff] bg-clip-text text-transparent">
-                Let's Engineer Your Next Breakthrough
-              </span>
-            </h1>
-            <p className="text-2xl text-white/70 leading-relaxed">
-              Our AI architects will reply within 24 hours
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="relative py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Contact Info */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
-              
-              <div className="space-y-6 mb-12">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-white/70">hello@neuroscopes.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#8b5cf6] to-[#00d4ff] flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Location</h3>
-                    <p className="text-white/70">Remote / Global</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Animated Background */}
-              <div className="relative h-64 rounded-3xl overflow-hidden border border-white/10">
-                <canvas
-                  ref={canvasRef}
-                  className="absolute inset-0 w-full h-full"
-                  style={{ background: 'linear-gradient(135deg, #050810 0%, #0a0e1a 100%)' }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center mb-4 mx-auto">
-                      <div className="w-12 h-12 border-2 border-white rounded-full"></div>
-                      <div className="absolute w-4 h-4 bg-white rounded-full"></div>
-                    </div>
-                    <p className="text-white/80 font-medium">Intelligence Reimagined</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
-                  <Input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                    className="bg-white/5 border-white/10 focus:border-[#00d4ff] text-white"
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <Input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                    className="bg-white/5 border-white/10 focus:border-[#00d4ff] text-white"
-                    placeholder="john@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Company</label>
-                  <Input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="bg-white/5 border-white/10 focus:border-[#00d4ff] text-white"
-                    placeholder="Your Company"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Message</label>
-                  <Textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                    rows={6}
-                    className="bg-white/5 border-white/10 focus:border-[#00d4ff] text-white resize-none"
-                    placeholder="Tell us about your AI automation goals..."
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-6 bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] hover:opacity-90 transition-opacity text-lg font-semibold"
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="w-5 h-5 ml-2" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Additional Info */}
-      <section className="relative py-20">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="p-8 rounded-3xl bg-gradient-to-r from-[#00d4ff]/10 to-[#8b5cf6]/10 border border-[#00d4ff]/20 text-center">
-            <h3 className="text-2xl font-bold mb-4">
-              Ready to Transform Your Business?
-            </h3>
-            <p className="text-white/70 text-lg mb-6">
-              Schedule a demo and see our AI systems in action. No commitment required.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="px-4 py-2 rounded-full bg-white/10 text-sm">
-                ✓ Free Consultation
-              </div>
-              <div className="px-4 py-2 rounded-full bg-white/10 text-sm">
-                ✓ Custom Solutions
-              </div>
-              <div className="px-4 py-2 rounded-full bg-white/10 text-sm">
-                ✓ 24h Response Time
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - NeuroScope.ai</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg, #050810, #0a0e1a); color: white; min-height: 100vh; }
+    h1, h2, h3 { font-family: 'Sora', sans-serif; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+    .gradient-text { background: linear-gradient(90deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    section { padding: 5rem 0; }
+    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+    .form-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; }
+    input, textarea { width: 100%; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.75rem; color: white; font-family: 'Inter', sans-serif; margin-bottom: 1rem; }
+    input:focus, textarea:focus { outline: none; border-color: #00d4ff; }
+    input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .btn { width: 100%; padding: 1rem; background: linear-gradient(90deg, #00d4ff, #8b5cf6); border: none; border-radius: 0.75rem; color: white; font-weight: 600; font-size: 1rem; cursor: pointer; transition: opacity 0.3s; }
+    .btn:hover { opacity: 0.9; }
+    .contact-info { display: flex; align-items: start; gap: 1rem; margin-bottom: 1.5rem; }
+    .icon-box { width: 3rem; height: 3rem; min-width: 3rem; background: linear-gradient(135deg, #00d4ff, #8b5cf6); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+  </style>
+</head>
+<body>
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(5, 8, 16, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+      <a href="../index.html" style="font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: white; text-decoration: none; background: linear-gradient(90deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">neuroscope</a>
+      <div style="display: flex; gap: 2rem; align-items: center;">
+        <a href="../index.html" style="color: white; text-decoration: none; font-weight: 500;">Home</a>
+        <a href="About.html" style="color: white; text-decoration: none; font-weight: 500;">About</a>
+        <a href="Solutions.html" style="color: white; text-decoration: none; font-weight: 500;">Solutions</a>
+        <a href="Pricing.html" style="color: white; text-decoration: none; font-weight: 500;">Pricing</a>
+        <a href="Blog.html" style="color: white; text-decoration: none; font-weight: 500;">Blog</a>
+        <a href="Contact.html" style="padding: 0.5rem 1.5rem; background: linear-gradient(90deg, #00d4ff, #8b5cf6); border-radius: 0.5rem; color: white; text-decoration: none; font-weight: 600;">Contact</a>
+      </div>
     </div>
-  );
-}
+  </nav>
+  <section style="padding-top: 8rem;">
+    <div class="container" style="max-width: 56rem; text-align: center;">
+      <h1 style="font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; margin-bottom: 1.5rem;">
+        <span class="gradient-text">Let's Engineer Your Next Breakthrough</span>
+      </h1>
+      <p style="font-size: 1.5rem; color: rgba(255, 255, 255, 0.7);">Our AI architects will reply within 24 hours</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Get in Touch</h2>
+          <div class="contact-info">
+            <div class="icon-box">📧</div>
+            <div><h3 style="font-weight: 600; margin-bottom: 0.5rem;">Email</h3><p style="color: rgba(255, 255, 255, 0.7);">mtaimur@neuroscopes.org</p></div>
+          </div>
+          <div class="contact-info">
+            <div class="icon-box">📍</div>
+            <div><h3 style="font-weight: 600; margin-bottom: 0.5rem;">Location</h3><p style="color: rgba(255, 255, 255, 0.7);">Remote / London</p></div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 3rem; text-align: center; margin-top: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
+            <p style="color: rgba(255, 255, 255, 0.8); font-weight: 500;">Intelligence Reimagined</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form id="contactForm" onsubmit="handleSubmit(event)">
+            <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 500;">Name</label>
+            <input type="text" id="name" placeholder="Mujtaba Taimur" required>
+            
+            <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 500;">Email</label>
+            <input type="email" id="email" placeholder="mtaimur@neuroscopes.org" required>
+            
+            <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 500;">Company</label>
+            <input type="text" id="company" placeholder="Your Company">
+            
+            <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 500;">Message</label>
+            <textarea id="message" rows="6" placeholder="Tell us about your AI automation goals..." required></textarea>
+            
+            <button type="submit" class="btn">Send Message</button>
+          </form>
+          <div id="successMessage" style="display: none; text-align: center; padding: 2rem;">
+            <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #00d4ff, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">✓</div>
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Message Sent!</h3>
+            <p style="color: rgba(255, 255, 255, 0.7);">We'll get back to you within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align: center; padding: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+    <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 0.5rem;">Contact: mtaimur@neuroscopes.org</p>
+    <a href="../index.html" style="color: #00d4ff; text-decoration: none;">← Back to Home</a>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const company = document.getElementById('company').value;
+      const message = document.getElementById('message').value;
+
+      console.log('Contact Form Submission:', { name, email, company, message });
+      
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+      
+      setTimeout(() => {
+        document.getElementById('contactForm').reset();
+        document.getElementById('contactForm').style.display = 'block';
+        document.getElementById('successMessage').style.display = 'none';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
+
