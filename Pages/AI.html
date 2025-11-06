@@ -430,7 +430,7 @@
               </span>
             </div>
             <div class="right-meta" id="model-meta">
-              Model: DeepSeek Thinking v3.2 · Temperature: 0.6
+              Model: Gemini Pro · Temperature: 0.7
             </div>
           </div>
 
@@ -490,7 +490,7 @@
       const modelMeta = document.getElementById('model-meta');
 
       const OPENAI_API_URL = 'http://localhost:3000/api/chat'; // Using proxy server
-      const OPENAI_MODEL = 'deepseek/deepseek-thinking-v3.2-exp'; // configurable
+      const OPENAI_MODEL = 'gemini-pro'; // Google Gemini
 
       function setLoading(isLoading) {
         engageBtn.disabled = isLoading;
@@ -516,19 +516,13 @@
         try {
           const body = {
             model: OPENAI_MODEL,
-            temperature: 0.6,
-            top_p: 0.7,
-            frequency_penalty: 1,
-            max_tokens: 99,
-            top_k: 50,
+            temperature: 0.7,
+            top_p: 0.95,
+            max_tokens: 2048,
             messages: [
               {
                 role: 'system',
-                content: [
-                  'You are NeuroScope Core — a minimal, confident, visionary AI.',
-                  'Style: analytical, succinct, slightly sentient.',
-                  'Respond with clarity and provide action-ready insights when applicable.'
-                ].join(' ')
+                content: 'You are NeuroScope Core — a minimal, confident, visionary AI. Style: analytical, succinct, slightly sentient. Respond with clarity and provide action-ready insights when applicable.'
               },
               { role: 'user', content: prompt }
             ]
@@ -566,7 +560,7 @@
       });
 
       engageBtn.addEventListener('click', engage);
-      modelMeta.textContent = `Model: DeepSeek Thinking v3.2 · Temperature: 0.6`;
+      modelMeta.textContent = `Model: Gemini Pro · Temperature: 0.7`;
     })();
   </script>
 </body>
