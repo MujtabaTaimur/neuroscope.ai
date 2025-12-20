@@ -23,7 +23,7 @@ export default function Preview() {
       // Check authentication
       const isAuthenticated = await base44.auth.isAuthenticated();
       if (!isAuthenticated) {
-        toast.error("🔒 Please log in to continue");
+        toast.error("Please log in to continue");
         base44.auth.redirectToLogin(window.location.pathname + window.location.search);
         return;
       }
@@ -51,7 +51,7 @@ export default function Preview() {
 
       // Security check - verify ownership
       if (foundWebsite.user_email !== currentUser.email && currentUser.role !== "admin") {
-        toast.error("🔒 Unauthorized access");
+        toast.error("Unauthorized access");
         navigate(createPageUrl("Builder"));
         return;
       }
@@ -110,7 +110,7 @@ export default function Preview() {
         is_unlocked: true
       });
 
-      toast.success("🎉 Full access unlocked! You can now download all content.");
+      toast.success("Full access unlocked. You can now download all content.");
       await loadWebsite();
     } catch (error) {
       console.error(error);

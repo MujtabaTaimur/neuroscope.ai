@@ -1,0 +1,453 @@
+{
+  "name": "NeuroScope Micro Interactions",
+  "version": "1.0.0",
+  "description": "Micro-interaction patterns and animations for NeuroScope modules",
+  "interactions": {
+    "hover": {
+      "description": "Hover state interactions",
+      "patterns": {
+        "card": {
+          "trigger": "hover",
+          "duration": "300ms",
+          "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+          "properties": {
+            "transform": "translateY(-8px)",
+            "background": "rgba(43, 89, 255, 0.05)",
+            "borderColor": "rgba(43, 89, 255, 0.3)",
+            "boxShadow": "0 0 30px rgba(43, 89, 255, 0.2)"
+          }
+        },
+        "button": {
+          "trigger": "hover",
+          "duration": "200ms",
+          "easing": "ease-out",
+          "properties": {
+            "transform": "translateY(-2px)",
+            "opacity": "0.9",
+            "boxShadow": "0 0 20px rgba(43, 89, 255, 0.3)"
+          }
+        },
+        "icon": {
+          "trigger": "hover",
+          "duration": "250ms",
+          "easing": "ease-in-out",
+          "properties": {
+            "transform": "scale(1.1)",
+            "color": "#2b59ff"
+          }
+        },
+        "tool": {
+          "trigger": "hover",
+          "duration": "200ms",
+          "easing": "ease-out",
+          "properties": {
+            "background": "rgba(43, 89, 255, 0.2)",
+            "boxShadow": "0 0 20px rgba(43, 89, 255, 0.4)",
+            "transform": "scale(1.05)"
+          }
+        }
+      }
+    },
+    "expand": {
+      "description": "Expand/collapse interactions",
+      "patterns": {
+        "panel": {
+          "trigger": "click",
+          "duration": "400ms",
+          "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+          "properties": {
+            "expand": {
+              "maxHeight": "1000px",
+              "opacity": "1",
+              "padding": "1.5rem"
+            },
+            "collapse": {
+              "maxHeight": "0",
+              "opacity": "0",
+              "padding": "0"
+            }
+          }
+        },
+        "accordion": {
+          "trigger": "click",
+          "duration": "300ms",
+          "easing": "ease-in-out",
+          "properties": {
+            "expand": {
+              "maxHeight": "500px",
+              "opacity": "1"
+            },
+            "collapse": {
+              "maxHeight": "0",
+              "opacity": "0"
+            }
+          }
+        },
+        "dropdown": {
+          "trigger": "click",
+          "duration": "200ms",
+          "easing": "ease-out",
+          "properties": {
+            "expand": {
+              "opacity": "1",
+              "transform": "translateY(0)",
+              "visibility": "visible"
+            },
+            "collapse": {
+              "opacity": "0",
+              "transform": "translateY(-10px)",
+              "visibility": "hidden"
+            }
+          }
+        }
+      }
+    },
+    "toolActivation": {
+      "description": "Tool activation pulse animations",
+      "patterns": {
+        "pulse": {
+          "trigger": "click",
+          "duration": "600ms",
+          "easing": "ease-in-out",
+          "keyframes": {
+            "0%": {
+              "transform": "scale(1)",
+              "opacity": "1",
+              "boxShadow": "0 0 0 0 rgba(43, 89, 255, 0.4)"
+            },
+            "50%": {
+              "transform": "scale(1.1)",
+              "opacity": "0.8",
+              "boxShadow": "0 0 0 10px rgba(43, 89, 255, 0)"
+            },
+            "100%": {
+              "transform": "scale(1)",
+              "opacity": "1",
+              "boxShadow": "0 0 0 0 rgba(43, 89, 255, 0)"
+            }
+          }
+        },
+        "ripple": {
+          "trigger": "click",
+          "duration": "400ms",
+          "easing": "ease-out",
+          "properties": {
+            "position": "absolute",
+            "borderRadius": "50%",
+            "background": "rgba(43, 89, 255, 0.3)",
+            "transform": "scale(0)",
+            "animation": "ripple 400ms ease-out"
+          }
+        },
+        "glow": {
+          "trigger": "active",
+          "duration": "300ms",
+          "easing": "ease-in-out",
+          "properties": {
+            "boxShadow": "0 0 30px rgba(43, 89, 255, 0.6), 0 0 60px rgba(123, 62, 255, 0.3)"
+          }
+        }
+      }
+    },
+    "hotkey": {
+      "description": "Hotkey overlay interactions",
+      "patterns": {
+        "show": {
+          "trigger": "keydown (Ctrl/Cmd + K)",
+          "duration": "200ms",
+          "easing": "ease-out",
+          "properties": {
+            "opacity": "1",
+            "transform": "translateY(0)",
+            "visibility": "visible",
+            "backdropFilter": "blur(10px)"
+          }
+        },
+        "hide": {
+          "trigger": "keydown (Escape)",
+          "duration": "150ms",
+          "easing": "ease-in",
+          "properties": {
+            "opacity": "0",
+            "transform": "translateY(-10px)",
+            "visibility": "hidden"
+          }
+        },
+        "highlight": {
+          "trigger": "keydown (arrow keys)",
+          "duration": "100ms",
+          "easing": "ease-out",
+          "properties": {
+            "background": "rgba(43, 89, 255, 0.2)",
+            "borderColor": "rgba(43, 89, 255, 0.5)"
+          }
+        }
+      },
+      "overlay": {
+        "background": "rgba(15, 15, 20, 0.95)",
+        "backdropFilter": "blur(20px)",
+        "border": "1px solid rgba(255, 255, 255, 0.1)",
+        "borderRadius": "1rem",
+        "padding": "2rem",
+        "maxWidth": "600px",
+        "zIndex": "1070"
+      },
+      "shortcut": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "padding": "0.75rem 1rem",
+        "borderRadius": "0.5rem",
+        "marginBottom": "0.5rem",
+        "transition": "all 0.2s"
+      },
+      "shortcutHover": {
+        "background": "rgba(43, 89, 255, 0.1)",
+        "borderColor": "rgba(43, 89, 255, 0.3)"
+      },
+      "key": {
+        "background": "rgba(255, 255, 255, 0.1)",
+        "border": "1px solid rgba(255, 255, 255, 0.2)",
+        "borderRadius": "0.25rem",
+        "padding": "0.25rem 0.5rem",
+        "fontSize": "0.75rem",
+        "fontFamily": "mono",
+        "minWidth": "24px",
+        "textAlign": "center"
+      }
+    },
+    "loading": {
+      "description": "Loading state interactions",
+      "patterns": {
+        "spinner": {
+          "duration": "800ms",
+          "easing": "linear",
+          "keyframes": {
+            "0%": { "transform": "rotate(0deg)" },
+            "100%": { "transform": "rotate(360deg)" }
+          },
+          "properties": {
+            "width": "1.25rem",
+            "height": "1.25rem",
+            "border": "2px solid rgba(255, 255, 255, 0.3)",
+            "borderTopColor": "#ffffff",
+            "borderRadius": "50%"
+          }
+        },
+        "skeleton": {
+          "duration": "1.5s",
+          "easing": "ease-in-out",
+          "keyframes": {
+            "0%": { "opacity": "0.6" },
+            "50%": { "opacity": "1" },
+            "100%": { "opacity": "0.6" }
+          },
+          "properties": {
+            "background": "rgba(255, 255, 255, 0.05)",
+            "borderRadius": "0.5rem"
+          }
+        },
+        "progress": {
+          "duration": "300ms",
+          "easing": "ease-out",
+          "properties": {
+            "height": "4px",
+            "background": "linear-gradient(90deg, #2b59ff, #7b3eff)",
+            "borderRadius": "2px",
+            "transition": "width 300ms ease-out"
+          }
+        }
+      }
+    },
+    "feedback": {
+      "description": "User feedback interactions",
+      "patterns": {
+        "success": {
+          "trigger": "action complete",
+          "duration": "300ms",
+          "easing": "ease-out",
+          "properties": {
+            "background": "rgba(76, 175, 80, 0.1)",
+            "borderColor": "rgba(76, 175, 80, 0.3)",
+            "color": "#4caf50",
+            "icon": "check-circle"
+          }
+        },
+        "error": {
+          "trigger": "action failed",
+          "duration": "300ms",
+          "easing": "ease-out",
+          "properties": {
+            "background": "rgba(244, 67, 54, 0.1)",
+            "borderColor": "rgba(244, 67, 54, 0.3)",
+            "color": "#f44336",
+            "icon": "alert-circle",
+            "shake": {
+              "keyframes": {
+                "0%, 100%": { "transform": "translateX(0)" },
+                "25%": { "transform": "translateX(-10px)" },
+                "75%": { "transform": "translateX(10px)" }
+              },
+              "duration": "400ms"
+            }
+          }
+        },
+        "notification": {
+          "trigger": "event",
+          "duration": "300ms",
+          "easing": "ease-out",
+          "properties": {
+            "position": "fixed",
+            "top": "1rem",
+            "right": "1rem",
+            "background": "rgba(15, 15, 20, 0.95)",
+            "border": "1px solid rgba(255, 255, 255, 0.1)",
+            "borderRadius": "1rem",
+            "padding": "1rem 1.5rem",
+            "boxShadow": "0 10px 25px rgba(0, 0, 0, 0.3)",
+            "zIndex": "1070",
+            "slideIn": {
+              "keyframes": {
+                "from": { "transform": "translateX(400px)", "opacity": "0" },
+                "to": { "transform": "translateX(0)", "opacity": "1" }
+              },
+              "duration": "300ms"
+            }
+          }
+        }
+      }
+    },
+    "drag": {
+      "description": "Drag and drop interactions",
+      "patterns": {
+        "draggable": {
+          "trigger": "mousedown",
+          "properties": {
+            "cursor": "grab",
+            "transition": "none"
+          }
+        },
+        "dragging": {
+          "trigger": "mousemove (while dragging)",
+          "properties": {
+            "cursor": "grabbing",
+            "opacity": "0.8",
+            "transform": "scale(0.95)",
+            "zIndex": "1000"
+          }
+        },
+        "dropZone": {
+          "trigger": "dragover",
+          "properties": {
+            "background": "rgba(43, 89, 255, 0.1)",
+            "borderColor": "rgba(43, 89, 255, 0.5)",
+            "borderStyle": "dashed"
+          }
+        }
+      }
+    },
+    "focus": {
+      "description": "Focus state interactions",
+      "patterns": {
+        "input": {
+          "trigger": "focus",
+          "duration": "200ms",
+          "easing": "ease-out",
+          "properties": {
+            "borderColor": "rgba(43, 89, 255, 0.5)",
+            "boxShadow": "0 0 20px rgba(43, 89, 255, 0.2)",
+            "outline": "none"
+          }
+        },
+        "button": {
+          "trigger": "focus",
+          "duration": "200ms",
+          "easing": "ease-out",
+          "properties": {
+            "outline": "2px solid rgba(43, 89, 255, 0.5)",
+            "outlineOffset": "2px"
+          }
+        }
+      }
+    }
+  },
+  "moduleSpecific": {
+    "cad": {
+      "toolActivation": {
+        "pulseColor": "rgba(0, 212, 255, 0.6)",
+        "glowColor": "rgba(0, 212, 255, 0.4)"
+      },
+      "viewport": {
+        "zoom": {
+          "duration": "300ms",
+          "easing": "ease-out"
+        },
+        "rotate": {
+          "duration": "200ms",
+          "easing": "linear"
+        }
+      }
+    },
+    "math": {
+      "equation": {
+        "typing": {
+          "duration": "100ms",
+          "easing": "linear"
+        },
+        "solve": {
+          "duration": "800ms",
+          "easing": "ease-in-out",
+          "pulse": true
+        }
+      }
+    },
+    "biology": {
+      "simulation": {
+        "play": {
+          "duration": "200ms",
+          "easing": "ease-out"
+        },
+        "pause": {
+          "duration": "150ms",
+          "easing": "ease-in"
+        }
+      }
+    },
+    "code": {
+      "typing": {
+        "duration": "50ms",
+        "easing": "linear"
+      },
+      "autocomplete": {
+        "duration": "200ms",
+        "easing": "ease-out"
+      }
+    },
+    "medical": {
+      "image": {
+        "zoom": {
+          "duration": "300ms",
+          "easing": "ease-out"
+        },
+        "pan": {
+          "duration": "200ms",
+          "easing": "linear"
+        }
+      }
+    },
+    "protein": {
+      "structure": {
+        "rotate": {
+          "duration": "300ms",
+          "easing": "ease-out"
+        },
+        "highlight": {
+          "duration": "200ms",
+          "easing": "ease-out",
+          "glow": "rgba(244, 114, 182, 0.4)"
+        }
+      }
+    }
+  }
+}
+

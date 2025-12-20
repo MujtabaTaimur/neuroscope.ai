@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - NeuroScope</title>
+  <meta name="theme-color" content="#0f0f14">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../DesignSystem/tokens.css">
+
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-secondary); }
+    h1, h2, h3 { font-family: var(--font-primary); }
+
+    body {
+      background: var(--color-bg-primary);
+      color: var(--color-fg-primary);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px var(--spacing-8) var(--spacing-16);
+    }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      background: var(--backdrop-glass-light);
+      border: 1px solid var(--color-border-default);
+      backdrop-filter: var(--backdrop-blur-base);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: var(--spacing-8);
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex;
+      gap: var(--spacing-6);
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .profile {
+      display: flex;
+      gap: var(--spacing-5);
+      align-items: center;
+      min-width: 260px;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      object-fit: cover;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta .name { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
+    .meta .email { color: var(--color-fg-secondary); font-size: var(--font-size-sm); }
+
+    .actions {
+      display: flex;
+      gap: var(--spacing-3);
+      align-items: center;
+    }
+
+    .btn {
+      padding: var(--spacing-3) var(--spacing-6);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-default);
+      background: var(--backdrop-glass-medium);
+      color: var(--color-fg-primary);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      transition: all var(--duration-base);
+    }
+
+    .btn:hover {
+      border-color: var(--color-border-active);
+      box-shadow: var(--shadow-glow-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn.primary {
+      background: var(--gradient-primary);
+      border: none;
+    }
+
+    .panel-body {
+      padding: var(--spacing-8);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-6);
+    }
+
+    @media (min-width: 900px) {
+      .panel-body { grid-template-columns: 1fr 1fr; }
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      padding: var(--spacing-6);
+    }
+
+    .card h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .card p {
+      color: var(--color-fg-secondary);
+      line-height: var(--line-height-relaxed);
+      font-size: var(--font-size-sm);
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-xs);
+      color: var(--color-fg-secondary);
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-nav); background: var(--color-bg-overlay); backdrop-filter: var(--backdrop-blur-base); border-bottom: 1px solid var(--color-border-default);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: var(--spacing-4) var(--spacing-8); display: flex; justify-content: space-between; align-items: center;">
+      <a href="../index.html" style="font-family: var(--font-primary); font-size: 1.25rem; font-weight: var(--font-weight-bold); color: var(--color-fg-primary); text-decoration: none; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">neuroscope</a>
+      <div style="display: flex; gap: var(--spacing-6); align-items: center;">
+        <a href="../index.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium);">Home</a>
+        <a href="AI.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium);">AI</a>
+        <span id="ns-auth" style="display:flex; align-items:center; --ns-auth-cta-bg: var(--gradient-primary); --ns-auth-cta-padding: var(--spacing-2) var(--spacing-6); --ns-auth-cta-radius: var(--radius-sm); --ns-auth-cta-color: var(--color-fg-primary); --ns-auth-cta-font-weight: var(--font-weight-semibold);"></span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="panel">
+      <div class="panel-head">
+        <div class="profile">
+          <div class="avatar" style="display:flex; align-items:center; justify-content:center; font-weight: var(--font-weight-bold);">NS</div>
+          <div class="meta">
+            <div class="name" id="ns-name">Profile</div>
+            <div class="email" id="ns-email"></div>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="btn" href="AI.html" style="text-decoration:none; display:inline-flex; align-items:center;">Open AI Workstation</a>
+          <button class="btn primary" id="ns-signout" type="button">Sign out</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="card">
+          <h3>Session</h3>
+          <p>This profile is stored locally in your browser to support static hosting. For gated features and real authorization, validate the token server-side and issue a session cookie.</p>
+        </div>
+        <div class="card">
+          <h3>Session token</h3>
+          <p><code id="ns-token"></code></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../Integration/auth-config.js"></script>
+  <script src="../Integration/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.NeuroScopeAuth) return;
+
+      const auth = window.NeuroScopeAuth.requireAuthOrRedirect();
+      if (!auth) return;
+
+      const user = auth.user || {};
+      document.getElementById('ns-name').textContent = user.username || 'Account';
+      document.getElementById('ns-email').textContent = user.role ? `Role: ${user.role}` : '';
+      document.getElementById('ns-token').textContent = JSON.stringify(auth, null, 2);
+
+      document.getElementById('ns-signout').addEventListener('click', () => {
+        try {
+          window.NeuroScopeAuth.clearAuth();
+        } catch {}
+        window.location.href = '../index.html';
+      });
+    });
+  </script>
+</body>
+</html>

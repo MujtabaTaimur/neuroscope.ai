@@ -1,0 +1,444 @@
+/**
+ * NeuroScope Design Tokens - CSS Implementation
+ * 
+ * This file provides CSS variables for all design tokens.
+ * Import this file in your main stylesheet to use the tokens.
+ */
+
+:root {
+  /* ============================================
+     COLORS - Base
+     ============================================ */
+  
+  /* Background Colors */
+  --color-bg-primary: #0f0f14;
+  --color-bg-secondary: #1a1a24;
+  --color-bg-tertiary: #252530;
+  --color-bg-elevated: rgba(255, 255, 255, 0.02);
+  --color-bg-overlay: rgba(15, 15, 20, 0.95);
+  
+  /* Foreground Colors */
+  --color-fg-primary: #ffffff;
+  --color-fg-secondary: #cfcfcf;
+  --color-fg-tertiary: #8a8a9a;
+  --color-fg-disabled: rgba(255, 255, 255, 0.3);
+  
+  /* Border Colors */
+  --color-border-default: rgba(255, 255, 255, 0.05);
+  --color-border-hover: rgba(255, 255, 255, 0.1);
+  --color-border-active: rgba(43, 89, 255, 0.3);
+  --color-border-focus: rgba(43, 89, 255, 0.5);
+  
+  /* ============================================
+     COLORS - Accent
+     ============================================ */
+  
+  /* Primary Accent (Blue) */
+  --color-accent-primary-50: #e8edff;
+  --color-accent-primary-100: #c5d1ff;
+  --color-accent-primary-200: #9db0ff;
+  --color-accent-primary-300: #758eff;
+  --color-accent-primary-400: #5775ff;
+  --color-accent-primary-500: #2b59ff;
+  --color-accent-primary-600: #1f47e6;
+  --color-accent-primary-700: #1635cc;
+  --color-accent-primary-800: #0e25b3;
+  --color-accent-primary-900: #071899;
+  
+  /* Secondary Accent (Purple) */
+  --color-accent-secondary-50: #f3e8ff;
+  --color-accent-secondary-100: #e1c5ff;
+  --color-accent-secondary-200: #ce9eff;
+  --color-accent-secondary-300: #bb77ff;
+  --color-accent-secondary-400: #ad5aff;
+  --color-accent-secondary-500: #7b3eff;
+  --color-accent-secondary-600: #6b2fe6;
+  --color-accent-secondary-700: #5a20cc;
+  --color-accent-secondary-800: #4a13b3;
+  --color-accent-secondary-900: #3a0899;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(90deg, #2b59ff, #7b3eff);
+  --gradient-secondary: linear-gradient(135deg, #2b59ff, #7b3eff);
+  --gradient-tertiary: linear-gradient(180deg, #2b59ff, #7b3eff, #2b59ff);
+  
+  /* ============================================
+     COLORS - Semantic
+     ============================================ */
+  
+  /* Success */
+  --color-success-50: #e8f5e9;
+  --color-success-500: #4caf50;
+  --color-success-600: #43a047;
+  
+  /* Warning */
+  --color-warning-50: #fff3e0;
+  --color-warning-500: #ff9800;
+  --color-warning-600: #fb8c00;
+  
+  /* Error */
+  --color-error-50: #ffebee;
+  --color-error-500: #f44336;
+  --color-error-600: #e53935;
+  
+  /* Info */
+  --color-info-50: #e3f2fd;
+  --color-info-500: #2196f3;
+  --color-info-600: #1e88e5;
+  
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+  
+  /* Font Families */
+  --font-primary: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  --font-size-8xl: 6rem;
+  --font-size-9xl: 8rem;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+  
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.15em;
+  
+  /* ============================================
+     SPACING
+     ============================================ */
+  
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-40: 10rem;
+  --spacing-48: 12rem;
+  --spacing-64: 16rem;
+  
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  
+  --radius-none: 0;
+  --radius-sm: 0.5rem;
+  --radius-base: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-2xl: 2.5rem;
+  --radius-3xl: 3rem;
+  --radius-full: 9999px;
+  
+  /* ============================================
+     SHADOWS
+     ============================================ */
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* Glow Shadows */
+  --shadow-glow-primary: 0 0 20px rgba(43, 89, 255, 0.2), 0 0 40px rgba(123, 62, 255, 0.1);
+  --shadow-glow-hover: 0 0 30px rgba(43, 89, 255, 0.4), 0 0 60px rgba(123, 62, 255, 0.2);
+  --shadow-glow-active: 0 0 40px rgba(43, 89, 255, 0.6), 0 0 80px rgba(123, 62, 255, 0.3);
+  
+  /* Neural Shadows */
+  --shadow-neural-pulse: 0 0 20px rgba(43, 89, 255, 0.3), 0 0 40px rgba(123, 62, 255, 0.15);
+  --shadow-neural-connection: 0 0 10px rgba(43, 89, 255, 0.2);
+  
+  /* ============================================
+     GRID SYSTEM
+     ============================================ */
+  
+  --grid-columns-mobile: 4;
+  --grid-columns-tablet: 8;
+  --grid-columns-desktop: 12;
+  --grid-columns-wide: 16;
+  
+  --grid-gutter-mobile: 1rem;
+  --grid-gutter-tablet: 1.5rem;
+  --grid-gutter-desktop: 2rem;
+  --grid-gutter-wide: 2.5rem;
+  
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1400px;
+  --container-full: 100%;
+  
+  /* ============================================
+     Z-INDEX
+     ============================================ */
+  
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-canvas: 0;
+  --z-content: 10;
+  --z-nav: 100;
+  
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+  --duration-slowest: 1200ms;
+  
+  --easing-linear: linear;
+  --easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* ============================================
+     BACKDROP
+     ============================================ */
+  
+  --backdrop-blur-sm: blur(10px);
+  --backdrop-blur-base: blur(20px);
+  --backdrop-blur-md: blur(30px);
+  --backdrop-blur-lg: blur(40px);
+  --backdrop-blur-xl: blur(60px);
+  
+  --backdrop-glass-light: rgba(255, 255, 255, 0.02);
+  --backdrop-glass-medium: rgba(255, 255, 255, 0.05);
+  --backdrop-glass-heavy: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   MODULE-SPECIFIC TOKENS
+   ============================================ */
+
+/* CAD Module */
+[data-module="cad"] {
+  --module-color-primary: #00d4ff;
+  --module-color-secondary: #0099cc;
+  --module-color-accent: #00ffff;
+  --module-bg: rgba(0, 212, 255, 0.05);
+  --module-border: rgba(0, 212, 255, 0.2);
+  --module-glow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+/* Math Module */
+[data-module="math"] {
+  --module-color-primary: #ff6b6b;
+  --module-color-secondary: #ee5a6f;
+  --module-color-accent: #ff8787;
+  --module-bg: rgba(255, 107, 107, 0.05);
+  --module-border: rgba(255, 107, 107, 0.2);
+  --module-glow: 0 0 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Biology Module */
+[data-module="biology"] {
+  --module-color-primary: #51cf66;
+  --module-color-secondary: #40c057;
+  --module-color-accent: #69db7c;
+  --module-bg: rgba(81, 207, 102, 0.05);
+  --module-border: rgba(81, 207, 102, 0.2);
+  --module-glow: 0 0 20px rgba(81, 207, 102, 0.4);
+}
+
+/* Code Module */
+[data-module="code"] {
+  --module-color-primary: #ffd43b;
+  --module-color-secondary: #fcc419;
+  --module-color-accent: #ffe066;
+  --module-bg: rgba(255, 212, 59, 0.05);
+  --module-border: rgba(255, 212, 59, 0.2);
+  --module-glow: 0 0 20px rgba(255, 212, 59, 0.4);
+}
+
+/* Medical Module */
+[data-module="medical"] {
+  --module-color-primary: #a78bfa;
+  --module-color-secondary: #8b5cf6;
+  --module-color-accent: #c4b5fd;
+  --module-bg: rgba(167, 139, 250, 0.05);
+  --module-border: rgba(167, 139, 250, 0.2);
+  --module-glow: 0 0 20px rgba(167, 139, 250, 0.4);
+}
+
+/* Protein Module */
+[data-module="protein"] {
+  --module-color-primary: #f472b6;
+  --module-color-secondary: #ec4899;
+  --module-color-accent: #f9a8d4;
+  --module-bg: rgba(244, 114, 182, 0.05);
+  --module-border: rgba(244, 114, 182, 0.2);
+  --module-glow: 0 0 20px rgba(244, 114, 182, 0.4);
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+@keyframes neural-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes glow-breath {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(43, 89, 255, 0.2), 0 0 40px rgba(123, 62, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(43, 89, 255, 0.4), 0 0 60px rgba(123, 62, 255, 0.2);
+  }
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes tool-activation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes expand {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 1000px;
+    opacity: 1;
+  }
+}
+
+@keyframes collapse {
+  from {
+    max-height: 1000px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.neural-pulse {
+  animation: neural-pulse 3s ease-in-out infinite;
+}
+
+.glow-breath {
+  animation: glow-breath 4s ease-in-out infinite;
+}
+
+.float-in {
+  animation: float-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.text-shimmer {
+  background: linear-gradient(90deg, #cfcfcf 0%, #ffffff 50%, #cfcfcf 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-shimmer 4s linear infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #2b59ff, #7b3eff, #2b59ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-morphism {
+  background: var(--backdrop-glass-light);
+  backdrop-filter: var(--backdrop-blur-base);
+  border: 1px solid var(--color-border-default);
+}
+

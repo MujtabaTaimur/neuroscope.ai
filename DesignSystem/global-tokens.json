@@ -1,0 +1,273 @@
+{
+  "name": "NeuroScope Global Design Tokens",
+  "version": "1.0.0",
+  "description": "Global design tokens for the NeuroScope.ai multi-field AI workstation",
+  "tokens": {
+    "color": {
+      "base": {
+        "background": {
+          "primary": "#0f0f14",
+          "secondary": "#1a1a24",
+          "tertiary": "#252530",
+          "elevated": "rgba(255, 255, 255, 0.02)",
+          "overlay": "rgba(15, 15, 20, 0.95)"
+        },
+        "foreground": {
+          "primary": "#ffffff",
+          "secondary": "#cfcfcf",
+          "tertiary": "#8a8a9a",
+          "disabled": "rgba(255, 255, 255, 0.3)"
+        },
+        "border": {
+          "default": "rgba(255, 255, 255, 0.05)",
+          "hover": "rgba(255, 255, 255, 0.1)",
+          "active": "rgba(43, 89, 255, 0.3)",
+          "focus": "rgba(43, 89, 255, 0.5)"
+        }
+      },
+      "accent": {
+        "primary": {
+          "50": "#e8edff",
+          "100": "#c5d1ff",
+          "200": "#9db0ff",
+          "300": "#758eff",
+          "400": "#5775ff",
+          "500": "#2b59ff",
+          "600": "#1f47e6",
+          "700": "#1635cc",
+          "800": "#0e25b3",
+          "900": "#071899"
+        },
+        "secondary": {
+          "50": "#f3e8ff",
+          "100": "#e1c5ff",
+          "200": "#ce9eff",
+          "300": "#bb77ff",
+          "400": "#ad5aff",
+          "500": "#7b3eff",
+          "600": "#6b2fe6",
+          "700": "#5a20cc",
+          "800": "#4a13b3",
+          "900": "#3a0899"
+        },
+        "gradient": {
+          "primary": "linear-gradient(90deg, #2b59ff, #7b3eff)",
+          "secondary": "linear-gradient(135deg, #2b59ff, #7b3eff)",
+          "tertiary": "linear-gradient(180deg, #2b59ff, #7b3eff, #2b59ff)"
+        }
+      },
+      "semantic": {
+        "success": {
+          "50": "#e8f5e9",
+          "500": "#4caf50",
+          "600": "#43a047"
+        },
+        "warning": {
+          "50": "#fff3e0",
+          "500": "#ff9800",
+          "600": "#fb8c00"
+        },
+        "error": {
+          "50": "#ffebee",
+          "500": "#f44336",
+          "600": "#e53935"
+        },
+        "info": {
+          "50": "#e3f2fd",
+          "500": "#2196f3",
+          "600": "#1e88e5"
+        }
+      }
+    },
+    "typography": {
+      "fontFamily": {
+        "primary": "'Sora', -apple-system, BlinkMacSystemFont, sans-serif",
+        "secondary": "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+        "mono": "'JetBrains Mono', 'Fira Code', 'Courier New', monospace"
+      },
+      "fontSize": {
+        "xs": "0.75rem",
+        "sm": "0.875rem",
+        "base": "1rem",
+        "lg": "1.125rem",
+        "xl": "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+        "5xl": "3rem",
+        "6xl": "3.75rem",
+        "7xl": "4.5rem",
+        "8xl": "6rem",
+        "9xl": "8rem"
+      },
+      "fontWeight": {
+        "light": "300",
+        "normal": "400",
+        "medium": "500",
+        "semibold": "600",
+        "bold": "700",
+        "extrabold": "800"
+      },
+      "lineHeight": {
+        "tight": "1.25",
+        "snug": "1.375",
+        "normal": "1.5",
+        "relaxed": "1.625",
+        "loose": "2"
+      },
+      "letterSpacing": {
+        "tighter": "-0.05em",
+        "tight": "-0.025em",
+        "normal": "0em",
+        "wide": "0.025em",
+        "wider": "0.05em",
+        "widest": "0.15em"
+      }
+    },
+    "spacing": {
+      "0": "0",
+      "1": "0.25rem",
+      "2": "0.5rem",
+      "3": "0.75rem",
+      "4": "1rem",
+      "5": "1.25rem",
+      "6": "1.5rem",
+      "8": "2rem",
+      "10": "2.5rem",
+      "12": "3rem",
+      "16": "4rem",
+      "20": "5rem",
+      "24": "6rem",
+      "32": "8rem",
+      "40": "10rem",
+      "48": "12rem",
+      "64": "16rem"
+    },
+    "borderRadius": {
+      "none": "0",
+      "sm": "0.5rem",
+      "base": "0.75rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "2.5rem",
+      "3xl": "3rem",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 1px 2px rgba(0, 0, 0, 0.05)",
+      "base": "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",
+      "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+      "glow": {
+        "primary": "0 0 20px rgba(43, 89, 255, 0.2), 0 0 40px rgba(123, 62, 255, 0.1)",
+        "hover": "0 0 30px rgba(43, 89, 255, 0.4), 0 0 60px rgba(123, 62, 255, 0.2)",
+        "active": "0 0 40px rgba(43, 89, 255, 0.6), 0 0 80px rgba(123, 62, 255, 0.3)"
+      },
+      "neural": {
+        "pulse": "0 0 20px rgba(43, 89, 255, 0.3), 0 0 40px rgba(123, 62, 255, 0.15)",
+        "connection": "0 0 10px rgba(43, 89, 255, 0.2)"
+      }
+    },
+    "grid": {
+      "columns": {
+        "mobile": "4",
+        "tablet": "8",
+        "desktop": "12",
+        "wide": "16"
+      },
+      "gutter": {
+        "mobile": "1rem",
+        "tablet": "1.5rem",
+        "desktop": "2rem",
+        "wide": "2.5rem"
+      },
+      "container": {
+        "sm": "640px",
+        "md": "768px",
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1400px",
+        "full": "100%"
+      }
+    },
+    "zIndex": {
+      "base": "0",
+      "dropdown": "1000",
+      "sticky": "1020",
+      "fixed": "1030",
+      "modalBackdrop": "1040",
+      "modal": "1050",
+      "popover": "1060",
+      "tooltip": "1070",
+      "canvas": "0",
+      "content": "10",
+      "nav": "100"
+    },
+    "animation": {
+      "duration": {
+        "fast": "150ms",
+        "base": "300ms",
+        "slow": "500ms",
+        "slower": "800ms",
+        "slowest": "1200ms"
+      },
+      "easing": {
+        "linear": "linear",
+        "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+        "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+        "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "bounce": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+        "smooth": "cubic-bezier(0.16, 1, 0.3, 1)"
+      },
+      "keyframes": {
+        "neuralPulse": {
+          "0%, 100%": { "opacity": "0.3", "transform": "scale(1)" },
+          "50%": { "opacity": "0.8", "transform": "scale(1.05)" }
+        },
+        "glowBreath": {
+          "0%, 100%": { "boxShadow": "0 0 20px rgba(43, 89, 255, 0.2), 0 0 40px rgba(123, 62, 255, 0.1)" },
+          "50%": { "boxShadow": "0 0 30px rgba(43, 89, 255, 0.4), 0 0 60px rgba(123, 62, 255, 0.2)" }
+        },
+        "floatIn": {
+          "from": { "opacity": "0", "transform": "translateY(40px)" },
+          "to": { "opacity": "1", "transform": "translateY(0)" }
+        },
+        "textShimmer": {
+          "0%": { "backgroundPosition": "-200% center" },
+          "100%": { "backgroundPosition": "200% center" }
+        },
+        "toolActivation": {
+          "0%": { "transform": "scale(1)", "opacity": "1" },
+          "50%": { "transform": "scale(1.1)", "opacity": "0.8" },
+          "100%": { "transform": "scale(1)", "opacity": "1" }
+        },
+        "expand": {
+          "from": { "maxHeight": "0", "opacity": "0" },
+          "to": { "maxHeight": "1000px", "opacity": "1" }
+        },
+        "collapse": {
+          "from": { "maxHeight": "1000px", "opacity": "1" },
+          "to": { "maxHeight": "0", "opacity": "0" }
+        }
+      }
+    },
+    "backdrop": {
+      "blur": {
+        "sm": "blur(10px)",
+        "base": "blur(20px)",
+        "md": "blur(30px)",
+        "lg": "blur(40px)",
+        "xl": "blur(60px)"
+      },
+      "glass": {
+        "light": "rgba(255, 255, 255, 0.02)",
+        "medium": "rgba(255, 255, 255, 0.05)",
+        "heavy": "rgba(255, 255, 255, 0.1)"
+      }
+    }
+  }
+}
+

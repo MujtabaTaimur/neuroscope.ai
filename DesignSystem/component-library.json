@@ -1,0 +1,479 @@
+{
+  "name": "NeuroScope Component Library",
+  "version": "1.0.0",
+  "description": "Complete JSON component library for all NeuroScope modules",
+  "components": {
+    "base": {
+      "Button": {
+        "name": "Button",
+        "description": "Base button component with neural styling",
+        "variants": {
+          "primary": {
+            "background": "linear-gradient(90deg, #2b59ff, #7b3eff)",
+            "color": "#ffffff",
+            "padding": "1.25rem 2.5rem",
+            "borderRadius": "1rem",
+            "fontSize": "1.125rem",
+            "fontWeight": "600",
+            "transition": "all 0.3s",
+            "hover": {
+              "opacity": "0.9",
+              "transform": "translateY(-2px)",
+              "boxShadow": "0 0 30px rgba(43, 89, 255, 0.4)"
+            },
+            "active": {
+              "transform": "translateY(0)",
+              "boxShadow": "0 0 20px rgba(43, 89, 255, 0.2)"
+            }
+          },
+          "secondary": {
+            "background": "rgba(255, 255, 255, 0.05)",
+            "color": "#ffffff",
+            "border": "1px solid rgba(255, 255, 255, 0.1)",
+            "padding": "1rem 2rem",
+            "borderRadius": "0.75rem"
+          },
+          "ghost": {
+            "background": "transparent",
+            "color": "#cfcfcf",
+            "border": "none",
+            "padding": "0.75rem 1.5rem"
+          }
+        },
+        "sizes": {
+          "sm": { "padding": "0.75rem 1.5rem", "fontSize": "0.875rem" },
+          "md": { "padding": "1rem 2rem", "fontSize": "1rem" },
+          "lg": { "padding": "1.25rem 2.5rem", "fontSize": "1.125rem" }
+        }
+      },
+      "Card": {
+        "name": "Card",
+        "description": "Glass-morphism card component",
+        "default": {
+          "background": "rgba(255, 255, 255, 0.02)",
+          "backdropFilter": "blur(20px)",
+          "border": "1px solid rgba(255, 255, 255, 0.05)",
+          "borderRadius": "1.5rem",
+          "padding": "2rem",
+          "transition": "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+        },
+        "hover": {
+          "background": "rgba(43, 89, 255, 0.05)",
+          "borderColor": "rgba(43, 89, 255, 0.3)",
+          "transform": "translateY(-8px)"
+        },
+        "variants": {
+          "elevated": {
+            "background": "rgba(255, 255, 255, 0.05)",
+            "boxShadow": "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
+          },
+          "interactive": {
+            "cursor": "pointer"
+          }
+        }
+      },
+      "Input": {
+        "name": "Input",
+        "description": "Text input with neural focus effects",
+        "default": {
+          "width": "100%",
+          "padding": "1.25rem 1.5rem",
+          "background": "rgba(255, 255, 255, 0.05)",
+          "border": "1px solid rgba(255, 255, 255, 0.1)",
+          "borderRadius": "1rem",
+          "color": "#ffffff",
+          "fontSize": "1rem",
+          "transition": "all 0.3s"
+        },
+        "focus": {
+          "borderColor": "rgba(43, 89, 255, 0.5)",
+          "boxShadow": "0 0 20px rgba(43, 89, 255, 0.2)"
+        },
+        "placeholder": {
+          "color": "rgba(255, 255, 255, 0.4)"
+        }
+      },
+      "Modal": {
+        "name": "Modal",
+        "description": "Modal dialog with backdrop",
+        "backdrop": {
+          "background": "rgba(15, 15, 20, 0.95)",
+          "backdropFilter": "blur(20px)",
+          "zIndex": "1040"
+        },
+        "content": {
+          "background": "rgba(15, 15, 20, 0.98)",
+          "border": "1px solid rgba(255, 255, 255, 0.1)",
+          "borderRadius": "2rem",
+          "padding": "3rem",
+          "maxWidth": "600px",
+          "zIndex": "1050"
+        }
+      },
+      "Tooltip": {
+        "name": "Tooltip",
+        "description": "Contextual tooltip",
+        "default": {
+          "background": "rgba(15, 15, 20, 0.95)",
+          "border": "1px solid rgba(255, 255, 255, 0.1)",
+          "borderRadius": "0.75rem",
+          "padding": "0.75rem 1rem",
+          "fontSize": "0.875rem",
+          "color": "#cfcfcf",
+          "zIndex": "1070"
+        }
+      }
+    },
+    "cad": {
+      "Viewport3D": {
+        "name": "Viewport3D",
+        "description": "3D rendering viewport for CAD",
+        "default": {
+          "background": "#0a0a0f",
+          "border": "1px solid rgba(0, 212, 255, 0.1)",
+          "borderRadius": "0.5rem",
+          "width": "100%",
+          "height": "600px",
+          "position": "relative"
+        },
+        "controls": {
+          "position": "absolute",
+          "top": "1rem",
+          "right": "1rem",
+          "display": "flex",
+          "gap": "0.5rem"
+        }
+      },
+      "Toolbar": {
+        "name": "Toolbar",
+        "description": "CAD tool toolbar",
+        "default": {
+          "background": "rgba(0, 212, 255, 0.05)",
+          "border": "1px solid rgba(0, 212, 255, 0.1)",
+          "borderRadius": "0.5rem",
+          "padding": "1rem",
+          "display": "flex",
+          "gap": "0.75rem",
+          "height": "64px"
+        },
+        "tool": {
+          "width": "48px",
+          "height": "48px",
+          "borderRadius": "0.5rem",
+          "background": "rgba(0, 212, 255, 0.1)",
+          "border": "1px solid rgba(0, 212, 255, 0.2)",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center",
+          "cursor": "pointer",
+          "transition": "all 0.3s"
+        },
+        "toolHover": {
+          "background": "rgba(0, 212, 255, 0.2)",
+          "boxShadow": "0 0 20px rgba(0, 212, 255, 0.4)",
+          "transform": "scale(1.05)"
+        },
+        "toolActive": {
+          "background": "rgba(0, 212, 255, 0.3)",
+          "boxShadow": "0 0 30px rgba(0, 212, 255, 0.6)"
+        }
+      },
+      "PropertyPanel": {
+        "name": "PropertyPanel",
+        "description": "Properties panel for selected objects",
+        "default": {
+          "width": "320px",
+          "background": "rgba(15, 15, 20, 0.8)",
+          "backdropFilter": "blur(20px)",
+          "border": "1px solid rgba(0, 212, 255, 0.1)",
+          "borderRadius": "1rem",
+          "padding": "1.5rem"
+        }
+      }
+    },
+    "math": {
+      "EquationEditor": {
+        "name": "EquationEditor",
+        "description": "Mathematical equation editor",
+        "default": {
+          "background": "rgba(255, 107, 107, 0.03)",
+          "border": "1px solid rgba(255, 107, 107, 0.15)",
+          "borderRadius": "1rem",
+          "padding": "1.5rem",
+          "fontFamily": "mono",
+          "fontSize": "1.25rem",
+          "minHeight": "200px"
+        },
+        "focus": {
+          "borderColor": "rgba(255, 107, 107, 0.4)",
+          "boxShadow": "0 0 20px rgba(255, 107, 107, 0.2)"
+        }
+      },
+      "SolutionPanel": {
+        "name": "SolutionPanel",
+        "description": "Display solution results",
+        "default": {
+          "background": "rgba(15, 15, 20, 0.9)",
+          "border": "1px solid rgba(255, 107, 107, 0.2)",
+          "borderRadius": "1rem",
+          "padding": "2rem",
+          "minHeight": "400px"
+        }
+      },
+      "GraphCanvas": {
+        "name": "GraphCanvas",
+        "description": "Mathematical graph visualization",
+        "default": {
+          "background": "#0a0a0f",
+          "border": "1px solid rgba(255, 107, 107, 0.1)",
+          "borderRadius": "1rem",
+          "width": "100%",
+          "height": "500px"
+        },
+        "grid": {
+          "color": "rgba(255, 107, 107, 0.1)",
+          "lineWidth": "1"
+        }
+      }
+    },
+    "biology": {
+      "MoleculeViewer": {
+        "name": "MoleculeViewer",
+        "description": "3D molecule visualization",
+        "default": {
+          "background": "#0a0a0f",
+          "border": "1px solid rgba(81, 207, 102, 0.1)",
+          "borderRadius": "1rem",
+          "width": "100%",
+          "height": "600px"
+        }
+      },
+      "DataTable": {
+        "name": "DataTable",
+        "description": "Biological data table",
+        "default": {
+          "background": "rgba(81, 207, 102, 0.03)",
+          "border": "1px solid rgba(81, 207, 102, 0.15)",
+          "borderRadius": "0.75rem",
+          "overflow": "hidden"
+        },
+        "row": {
+          "padding": "1rem",
+          "borderBottom": "1px solid rgba(81, 207, 102, 0.1)",
+          "transition": "background 0.2s"
+        },
+        "rowHover": {
+          "background": "rgba(81, 207, 102, 0.08)"
+        }
+      },
+      "SimulationControl": {
+        "name": "SimulationControl",
+        "description": "Simulation control panel",
+        "default": {
+          "background": "rgba(15, 15, 20, 0.8)",
+          "border": "1px solid rgba(81, 207, 102, 0.2)",
+          "borderRadius": "1rem",
+          "padding": "1.5rem"
+        }
+      }
+    },
+    "code": {
+      "CodeEditor": {
+        "name": "CodeEditor",
+        "description": "Code editor component",
+        "default": {
+          "background": "#0a0a0f",
+          "border": "1px solid rgba(255, 212, 59, 0.1)",
+          "borderRadius": "0.75rem",
+          "fontFamily": "mono",
+          "fontSize": "0.875rem",
+          "lineHeight": "1.6",
+          "padding": "1rem",
+          "minHeight": "400px"
+        }
+      },
+      "Terminal": {
+        "name": "Terminal",
+        "description": "Terminal component",
+        "default": {
+          "background": "#0f0f14",
+          "border": "1px solid rgba(255, 212, 59, 0.15)",
+          "borderRadius": "0.75rem",
+          "fontFamily": "mono",
+          "fontSize": "0.875rem",
+          "padding": "1rem",
+          "minHeight": "200px"
+        }
+      },
+      "Sidebar": {
+        "name": "Sidebar",
+        "description": "Code module sidebar",
+        "default": {
+          "width": "280px",
+          "background": "rgba(15, 15, 20, 0.9)",
+          "border": "1px solid rgba(255, 212, 59, 0.1)",
+          "borderRadius": "0.75rem",
+          "padding": "1rem"
+        }
+      }
+    },
+    "medical": {
+      "ImageViewer": {
+        "name": "ImageViewer",
+        "description": "Medical image viewer",
+        "default": {
+          "background": "#000000",
+          "border": "1px solid rgba(167, 139, 250, 0.1)",
+          "borderRadius": "0.5rem",
+          "width": "100%",
+          "height": "600px",
+          "position": "relative"
+        }
+      },
+      "OverlayPanel": {
+        "name": "OverlayPanel",
+        "description": "Overlay control panel",
+        "default": {
+          "background": "rgba(15, 15, 20, 0.95)",
+          "backdropFilter": "blur(20px)",
+          "border": "1px solid rgba(167, 139, 250, 0.2)",
+          "borderRadius": "1rem",
+          "padding": "1.5rem",
+          "position": "absolute",
+          "top": "1rem",
+          "right": "1rem",
+          "width": "300px"
+        }
+      },
+      "MeasurementTool": {
+        "name": "MeasurementTool",
+        "description": "Measurement tool for medical images",
+        "default": {
+          "color": "#a78bfa",
+          "strokeWidth": "2",
+          "fontSize": "0.875rem"
+        }
+      }
+    },
+    "protein": {
+      "StructureViewer": {
+        "name": "StructureViewer",
+        "description": "3D protein structure viewer",
+        "default": {
+          "background": "#0a0a0f",
+          "border": "1px solid rgba(244, 114, 182, 0.1)",
+          "borderRadius": "1rem",
+          "width": "100%",
+          "height": "600px"
+        }
+      },
+      "SequenceEditor": {
+        "name": "SequenceEditor",
+        "description": "Protein sequence editor",
+        "default": {
+          "background": "rgba(244, 114, 182, 0.03)",
+          "border": "1px solid rgba(244, 114, 182, 0.15)",
+          "borderRadius": "0.75rem",
+          "fontFamily": "mono",
+          "fontSize": "1rem",
+          "padding": "1rem",
+          "minHeight": "200px"
+        }
+      },
+      "AnalysisPanel": {
+        "name": "AnalysisPanel",
+        "description": "Protein analysis results panel",
+        "default": {
+          "background": "rgba(15, 15, 20, 0.9)",
+          "border": "1px solid rgba(244, 114, 182, 0.2)",
+          "borderRadius": "1rem",
+          "padding": "2rem"
+        }
+      }
+    },
+    "integration": {
+      "CrossDomainButton": {
+        "name": "CrossDomainButton",
+        "description": "Button to trigger cross-domain requests",
+        "default": {
+          "background": "rgba(43, 89, 255, 0.1)",
+          "border": "1px solid rgba(43, 89, 255, 0.3)",
+          "borderRadius": "0.75rem",
+          "padding": "0.75rem 1.5rem",
+          "color": "#2b59ff",
+          "fontWeight": "600",
+          "cursor": "pointer",
+          "transition": "all 0.3s",
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "0.5rem"
+        },
+        "hover": {
+          "background": "rgba(43, 89, 255, 0.2)",
+          "boxShadow": "0 0 20px rgba(43, 89, 255, 0.3)"
+        },
+        "loading": {
+          "opacity": "0.6",
+          "cursor": "not-allowed"
+        }
+      },
+      "ModuleConnector": {
+        "name": "ModuleConnector",
+        "description": "Visual connector between modules",
+        "default": {
+          "stroke": "rgba(43, 89, 255, 0.3)",
+          "strokeWidth": "2",
+          "strokeDasharray": "5,5",
+          "animation": "dash 2s linear infinite"
+        },
+        "active": {
+          "stroke": "rgba(43, 89, 255, 0.8)",
+          "strokeWidth": "3",
+          "strokeDasharray": "none"
+        }
+      },
+      "RequestPanel": {
+        "name": "RequestPanel",
+        "description": "Panel showing cross-domain requests",
+        "default": {
+          "background": "rgba(15, 15, 20, 0.95)",
+          "border": "1px solid rgba(43, 89, 255, 0.2)",
+          "borderRadius": "1rem",
+          "padding": "1.5rem",
+          "maxHeight": "400px",
+          "overflowY": "auto"
+        }
+      }
+    }
+  },
+  "patterns": {
+    "hover": {
+      "description": "Standard hover interaction",
+      "transition": "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+      "transform": "translateY(-2px)",
+      "glow": "0 0 20px rgba(43, 89, 255, 0.3)"
+    },
+    "expand": {
+      "description": "Expand/collapse animation",
+      "duration": "300ms",
+      "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "maxHeight": "1000px"
+    },
+    "pulse": {
+      "description": "Tool activation pulse",
+      "duration": "600ms",
+      "keyframes": "toolActivation",
+      "scale": "1.1"
+    },
+    "hotkey": {
+      "description": "Hotkey overlay display",
+      "background": "rgba(15, 15, 20, 0.95)",
+      "border": "1px solid rgba(43, 89, 255, 0.3)",
+      "borderRadius": "0.5rem",
+      "padding": "0.5rem 1rem",
+      "fontSize": "0.75rem",
+      "fontFamily": "mono"
+    }
+  }
+}
+

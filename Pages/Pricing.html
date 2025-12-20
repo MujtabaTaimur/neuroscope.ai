@@ -35,7 +35,8 @@
         <a href="Pricing.html" style="color: #00d4ff; text-decoration: none; font-weight: 500;">Pricing</a>
         <a href="Blog.html" style="color: white; text-decoration: none; font-weight: 500;">Blog</a>
         <a href="AI.html" style="color: white; text-decoration: none; font-weight: 500;">AI</a>
-        <a href="Contact.html" style="padding: 0.5rem 1.5rem; background: linear-gradient(90deg, #00d4ff, #8b5cf6); border-radius: 0.5rem; color: white; text-decoration: none; font-weight: 600;">Contact</a>
+        <a href="Contact.html" style="color: white; text-decoration: none; font-weight: 500;">Contact</a>
+        <span id="ns-auth" style="display:flex; align-items:center; --ns-auth-cta-bg: linear-gradient(90deg, #00d4ff, #8b5cf6); --ns-auth-cta-padding: 0.5rem 1.5rem; --ns-auth-cta-radius: 0.5rem; --ns-auth-cta-color: white; --ns-auth-cta-font-weight: 600;"></span>
       </div>
     </div>
   </nav>
@@ -101,7 +102,7 @@
     <div class="container" style="max-width: 56rem;">
       <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem;">What Our <span class="gradient-text">Clients</span> Say</h2>
       <div class="testimonial" id="testimonial">
-        <div style="margin-bottom: 1.5rem;">⭐⭐⭐⭐⭐</div>
+        <div style="margin-bottom: 1.5rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.85);">Client feedback</div>
         <p id="quote" style="font-size: 1.25rem; margin-bottom: 2rem; color: rgba(255, 255, 255, 0.9);"></p>
         <div id="author" style="font-weight: 600; margin-bottom: 0.5rem;"></div>
         <div id="role" style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem;"></div>
@@ -118,6 +119,8 @@
     <a href="../index.html" style="color: #00d4ff; text-decoration: none;">← Back to Home</a>
   </div>
 
+  <script src="../Integration/auth-config.js"></script>
+  <script src="../Integration/auth.js"></script>
   <script>
     const testimonials = [
       { quote: "Our AI reduced analysis time by 80%. We're now making decisions in minutes that used to take days.", author: "Sarah Chen", role: "CEO, DataFlow Systems" },

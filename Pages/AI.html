@@ -5,83 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Interface - NeuroScope.ai</title>
   <meta name="theme-color" content="#0f0f14">
-  <meta name="description" content="NeuroScope Core — Adaptive Intelligence Node. Engage directly with the Core.">
+  <meta name="description" content="NeuroScope Core — Adaptive Intelligence Node with Cross-Domain Integration">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Design Tokens CSS -->
+  <link rel="stylesheet" href="../DesignSystem/tokens.css">
+  
+  <!-- Three.js for 3D CAD -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    // Fallback OrbitControls if CDN fails
+    if (typeof THREE !== 'undefined' && !THREE.OrbitControls) {
+      THREE.OrbitControls = function(camera, domElement) {
+        this.camera = camera;
+        this.domElement = domElement;
+        this.enableDamping = false;
+        this.dampingFactor = 0.05;
+        this.enableZoom = true;
+        this.enablePan = true;
+        this.minDistance = 1;
+        this.maxDistance = 50;
+        this.update = function() {};
+      };
+    }
+  </script>
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--font-secondary);
     }
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--font-primary);
     }
 
     body {
-      background: #0f0f14;
-      color: white;
+      background: var(--color-bg-primary);
+      color: var(--color-fg-primary);
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* Animations */
-    @keyframes neural-pulse {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.05); }
-    }
-
-    @keyframes glow-breath {
-      0%, 100% { box-shadow: 0 0 20px rgba(43, 89, 255, 0.2), 0 0 40px rgba(123, 62, 255, 0.1); }
-      50% { box-shadow: 0 0 30px rgba(43, 89, 255, 0.4), 0 0 60px rgba(123, 62, 255, 0.2); }
-    }
-
-    @keyframes float-in {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
-      30% { transform: translateY(-4px); opacity: 1; }
-    }
-
-    .gradient-text {
-      background: linear-gradient(90deg, #2b59ff, #7b3eff, #2b59ff);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
     .section-label {
-      letter-spacing: 0.15em;
-      font-size: 0.75rem;
-      font-weight: 600;
+      letter-spacing: var(--letter-spacing-widest);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
       text-transform: uppercase;
-      color: #cfcfcf;
-      margin-bottom: 1rem;
+      color: var(--color-fg-secondary);
+      margin-bottom: var(--spacing-4);
     }
 
-    /* Content wrapper */
+    /* Collapsible sections */
+    .collapsible-section {
+      margin-bottom: var(--spacing-8);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: var(--spacing-4);
+      background: var(--backdrop-glass-light);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-4);
+      transition: all var(--duration-base);
+    }
+
+    .section-header:hover {
+      background: var(--backdrop-glass-medium);
+      border-color: var(--color-accent-primary-500);
+    }
+
+    .section-header-title {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-fg-primary);
+    }
+
+    .collapse-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(43, 89, 255, 0.1);
+      border: 1px solid rgba(43, 89, 255, 0.3);
+      border-radius: var(--radius-sm);
+      color: var(--color-accent-primary-500);
+      font-size: var(--font-size-lg);
+      transition: all var(--duration-base);
+    }
+
+    .collapse-toggle:hover {
+      background: rgba(43, 89, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .section-content {
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .section-content.collapsed {
+      max-height: 0 !important;
+      opacity: 0;
+      margin-bottom: 0;
+    }
+
     .content {
       position: relative;
-      z-index: 10;
+      z-index: var(--z-content);
     }
 
     section {
-      padding: 4rem 2rem;
+      padding: var(--spacing-24) var(--spacing-8);
       position: relative;
     }
 
     /* Hero Section */
     .hero {
-      min-height: 60vh;
+      min-height: 40vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,89 +145,634 @@
     }
 
     .hero h1 {
-      font-size: clamp(3rem, 8vw, 5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--line-height-tight);
+      margin-bottom: var(--spacing-6);
     }
 
     .hero p {
-      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-      color: #cfcfcf;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--color-fg-secondary);
       max-width: 48rem;
-      margin: 0 auto 2rem;
-      line-height: 1.6;
+      margin: 0 auto var(--spacing-8);
+      line-height: var(--line-height-relaxed);
     }
 
-    /* Console/Card Styling */
-    .console-wrap {
-      max-width: 980px;
-      margin: 0 auto 6rem;
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 1.5rem;
-      padding: 0;
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Module Grid */
+    .modules-section {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-16);
+    }
+
+    .module-card {
+      background: var(--backdrop-glass-light);
+      backdrop-filter: var(--backdrop-blur-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      transition: all var(--duration-base) var(--easing-smooth);
+      cursor: pointer;
+      position: relative;
       overflow: hidden;
     }
 
-    .console-wrap:hover {
-      background: rgba(43, 89, 255, 0.05);
-      border-color: rgba(43, 89, 255, 0.3);
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--module-color-primary, var(--color-accent-primary-500));
+      transform: scaleX(0);
+      transition: transform var(--duration-base);
     }
 
-    .console-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(255, 255, 255, 0.02);
+    .module-card:hover {
+      background: var(--module-bg, rgba(43, 89, 255, 0.05));
+      border-color: var(--module-border, rgba(43, 89, 255, 0.3));
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-glow-hover);
     }
 
-    .console-title {
+    .module-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .module-card[data-module="cad"] { --module-color-primary: #00d4ff; --module-bg: rgba(0, 212, 255, 0.05); --module-border: rgba(0, 212, 255, 0.2); }
+    .module-card[data-module="math"] { --module-color-primary: #ff6b6b; --module-bg: rgba(255, 107, 107, 0.05); --module-border: rgba(255, 107, 107, 0.2); }
+    .module-card[data-module="biology"] { --module-color-primary: #51cf66; --module-bg: rgba(81, 207, 102, 0.05); --module-border: rgba(81, 207, 102, 0.2); }
+    .module-card[data-module="code"] { --module-color-primary: #ffd43b; --module-bg: rgba(255, 212, 59, 0.05); --module-border: rgba(255, 212, 59, 0.2); }
+    .module-card[data-module="medical"] { --module-color-primary: #a78bfa; --module-bg: rgba(167, 139, 250, 0.05); --module-border: rgba(167, 139, 250, 0.2); }
+    .module-card[data-module="protein"] { --module-color-primary: #f472b6; --module-bg: rgba(244, 114, 182, 0.05); --module-border: rgba(244, 114, 182, 0.2); }
+
+    .module-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 0.875rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #cfcfcf;
-      font-weight: 600;
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .module-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--module-color-primary), var(--module-color-primary));
+      opacity: 0.2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .module-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-fg-primary);
+    }
+
+    .module-description {
+      color: var(--color-fg-secondary);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--spacing-4);
+    }
+
+    .module-functions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+      margin-top: var(--spacing-4);
+    }
+
+    .function-badge {
+      background: var(--module-bg);
+      border: 1px solid var(--module-border);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--font-size-xs);
+      color: var(--module-color-primary);
+      font-family: var(--font-mono);
+    }
+
+    .module-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-success-500);
+      margin-top: var(--spacing-4);
     }
 
     .status-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2b59ff, #7b3eff);
-      box-shadow: 0 0 12px rgba(43, 89, 255, 0.8);
+      background: var(--color-success-500);
+      box-shadow: 0 0 12px var(--color-success-500);
       animation: neural-pulse 3s ease-in-out infinite;
     }
 
-    .console-body {
-      padding: 2rem;
+    /* Workspace Layout */
+    .workspace {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-8);
     }
 
-    /* Form Elements */
+    @media (max-width: 1200px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Code Editor */
+    .code-editor-container {
+      background: var(--backdrop-glass-light);
+      backdrop-filter: var(--backdrop-blur-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+    }
+
+    .editor-header {
+      background: rgba(255, 212, 59, 0.05);
+      border-bottom: 1px solid rgba(255, 212, 59, 0.2);
+      padding: var(--spacing-4) var(--spacing-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .editor-title {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      font-size: var(--font-size-sm);
+      color: #ffd43b;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: var(--spacing-2);
+    }
+
+    .editor-btn {
+      padding: var(--spacing-2) var(--spacing-4);
+      background: rgba(255, 212, 59, 0.1);
+      border: 1px solid rgba(255, 212, 59, 0.2);
+      border-radius: var(--radius-sm);
+      color: #ffd43b;
+      font-size: var(--font-size-xs);
+      cursor: pointer;
+      transition: all var(--duration-base);
+      font-family: var(--font-mono);
+    }
+
+    .editor-btn:hover {
+      background: rgba(255, 212, 59, 0.2);
+      box-shadow: 0 0 10px rgba(255, 212, 59, 0.3);
+    }
+
+    .code-editor {
+      flex: 1;
+      background: #0a0a0f;
+      border: none;
+      padding: var(--spacing-4);
+      color: var(--color-fg-primary);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-relaxed);
+      resize: none;
+      outline: none;
+      overflow-y: auto;
+      tab-size: 2;
+    }
+
+    .code-editor:focus {
+      outline: none;
+    }
+
+    /* Terminal */
+    .terminal-container {
+      background: var(--backdrop-glass-light);
+      backdrop-filter: var(--backdrop-blur-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+    }
+
+    .terminal-header {
+      background: rgba(15, 15, 20, 0.9);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: var(--spacing-4) var(--spacing-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .terminal-title {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-fg-secondary);
+      font-weight: var(--font-weight-semibold);
+      font-family: var(--font-mono);
+    }
+
+    .terminal-output {
+      flex: 1;
+      background: #0f0f14;
+      padding: var(--spacing-4);
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-fg-secondary);
+    }
+
+    .terminal-line {
+      margin-bottom: var(--spacing-2);
+      word-wrap: break-word;
+    }
+
+    .terminal-line.prompt {
+      color: #51cf66;
+    }
+
+    .terminal-line.output {
+      color: var(--color-fg-secondary);
+    }
+
+    .terminal-line.error {
+      color: #ff6b6b;
+    }
+
+    .terminal-input-container {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-4);
+      background: rgba(15, 15, 20, 0.9);
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .terminal-prompt {
+      color: #51cf66;
+      margin-right: var(--spacing-2);
+      font-family: var(--font-mono);
+    }
+
+    .terminal-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--color-fg-primary);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      outline: none;
+    }
+
+    /* Enhanced CAD 3D Viewer */
+    .cad-container {
+      background: var(--backdrop-glass-light);
+      backdrop-filter: var(--backdrop-blur-base);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 700px;
+      grid-column: 1 / -1;
+      margin-top: var(--spacing-8);
+    }
+
+    .cad-header {
+      background: rgba(0, 212, 255, 0.05);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      padding: var(--spacing-4) var(--spacing-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
+    }
+
+    .cad-title {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      font-size: var(--font-size-sm);
+      color: #00d4ff;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .cad-toolbar {
+      display: flex;
+      gap: var(--spacing-2);
+      flex-wrap: wrap;
+    }
+
+    .cad-btn {
+      padding: var(--spacing-2) var(--spacing-4);
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-sm);
+      color: #00d4ff;
+      font-size: var(--font-size-xs);
+      cursor: pointer;
+      transition: all var(--duration-base);
+      font-family: var(--font-mono);
+    }
+
+    .cad-btn:hover {
+      background: rgba(0, 212, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .cad-btn.active {
+      background: rgba(0, 212, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    }
+
+    .cad-viewport-wrapper {
+      flex: 1;
+      position: relative;
+      display: flex;
+      background: #0a0a0f;
+    }
+
+    .cad-viewport {
+      flex: 1;
+      position: relative;
+    }
+
+    .cad-sidebar {
+      width: 320px;
+      background: rgba(15, 15, 20, 0.95);
+      border-left: 1px solid rgba(0, 212, 255, 0.1);
+      padding: var(--spacing-4);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+    }
+
+    .cad-sidebar-section {
+      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+      padding-bottom: var(--spacing-4);
+    }
+
+    .cad-sidebar-title {
+      font-size: var(--font-size-xs);
+      color: #00d4ff;
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-3);
+      text-transform: uppercase;
+      letter-spacing: var(--letter-spacing-wide);
+    }
+
+    .cad-field {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-fg-secondary);
+    }
+
+    .cad-field input,
+    .cad-field select,
+    .cad-field textarea {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-2);
+      color: var(--color-fg-primary);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-xs);
+      width: 100%;
+    }
+
+    .cad-field textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .cad-sidebar button {
+      width: 100%;
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--font-size-xs);
+      margin-top: var(--spacing-2);
+    }
+
+    .cad-object-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cad-object-item {
+      padding: var(--spacing-2) var(--spacing-3);
+      margin-bottom: var(--spacing-1);
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--duration-base);
+      font-size: var(--font-size-xs);
+      font-family: var(--font-mono);
+      color: var(--color-fg-secondary);
+    }
+
+    .cad-object-item:hover {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: rgba(0, 212, 255, 0.3);
+    }
+
+    .cad-object-item.selected {
+      background: rgba(0, 212, 255, 0.2);
+      border-color: #00d4ff;
+      color: #00d4ff;
+    }
+
+    .cad-info {
+      position: absolute;
+      bottom: var(--spacing-4);
+      left: var(--spacing-4);
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-2) var(--spacing-4);
+      font-size: var(--font-size-xs);
+      color: #00d4ff;
+      font-family: var(--font-mono);
+      pointer-events: none;
+    }
+
+    .cad-stats {
+      display: flex;
+      gap: var(--spacing-4);
+      font-size: var(--font-size-xs);
+      color: var(--color-fg-secondary);
+    }
+
+    .cad-stat {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-1);
+    }
+
+    .cad-stat-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-fg-disabled);
+    }
+
+    .cad-stat-value {
+      font-size: var(--font-size-sm);
+      color: #00d4ff;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Integration Demo */
+    .integration-demo {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--backdrop-glass-light);
+      backdrop-filter: var(--backdrop-blur-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-8);
+      margin-top: var(--spacing-16);
+    }
+
+    .demo-controls {
+      display: flex;
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-6);
+      flex-wrap: wrap;
+    }
+
+    .demo-button {
+      padding: var(--spacing-3) var(--spacing-6);
+      background: var(--backdrop-glass-medium);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      color: var(--color-fg-primary);
+      font-size: var(--font-size-sm);
+      cursor: pointer;
+      transition: all var(--duration-base);
+      font-family: var(--font-mono);
+    }
+
+    .demo-button:hover {
+      background: rgba(43, 89, 255, 0.1);
+      border-color: var(--color-border-active);
+      box-shadow: var(--shadow-glow-primary);
+      transform: translateY(-2px);
+    }
+
+    .demo-result {
+      background: var(--backdrop-glass-medium);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-6);
+      min-height: 200px;
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      color: var(--color-fg-secondary);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .demo-result.success {
+      border-color: var(--color-success-500);
+      background: rgba(76, 175, 80, 0.05);
+    }
+
+    .demo-result.error {
+      border-color: var(--color-error-500);
+      background: rgba(244, 67, 54, 0.05);
+    }
+
+    /* Console Styling */
+    .console-wrap {
+      max-width: 980px;
+      margin: 0 auto 6rem;
+      background: var(--backdrop-glass-light);
+      backdrop-filter: var(--backdrop-blur-base);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: 0;
+      transition: all var(--duration-slow) var(--easing-smooth);
+      overflow: hidden;
+    }
+
+    .console-wrap:hover {
+      background: rgba(43, 89, 255, 0.05);
+      border-color: var(--color-border-active);
+    }
+
+    .console-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-6) var(--spacing-8);
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--backdrop-glass-light);
+    }
+
+    .console-title {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      font-size: var(--font-size-sm);
+      letter-spacing: var(--letter-spacing-wide);
+      text-transform: uppercase;
+      color: var(--color-fg-secondary);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .console-body {
+      padding: var(--spacing-8);
+    }
+
     .label-row {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: var(--spacing-4);
     }
 
     .label-row label {
-      font-size: 0.875rem;
-      color: #cfcfcf;
-      letter-spacing: 0.05em;
+      font-size: var(--font-size-sm);
+      color: var(--color-fg-secondary);
+      letter-spacing: var(--letter-spacing-wide);
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
     }
 
     .hint {
-      font-size: 0.75rem;
+      font-size: var(--font-size-xs);
       color: rgba(207, 207, 207, 0.6);
     }
 
@@ -180,61 +780,62 @@
       width: 100%;
       min-height: 120px;
       resize: vertical;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1rem;
-      padding: 1.25rem 1.5rem;
-      color: white;
-      font-size: 1rem;
-      line-height: 1.6;
+      background: var(--backdrop-glass-medium);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-5) var(--spacing-6);
+      color: var(--color-fg-primary);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-relaxed);
       outline: none;
-      transition: all 0.3s;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: all var(--duration-base);
+      font-family: var(--font-secondary);
     }
 
     textarea#core-input:focus {
-      border-color: rgba(43, 89, 255, 0.5);
-      box-shadow: 0 0 20px rgba(43, 89, 255, 0.2);
+      border-color: var(--color-border-focus);
+      box-shadow: var(--shadow-glow-primary);
       background: rgba(255, 255, 255, 0.08);
     }
 
     textarea#core-input::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--color-fg-disabled);
     }
 
     .controls {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      margin-top: 1.5rem;
+      gap: var(--spacing-4);
+      margin-top: var(--spacing-6);
     }
 
     .left-cta {
       display: flex;
-      gap: 1rem;
+      gap: var(--spacing-4);
       align-items: center;
     }
 
     .engage-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 2rem;
-      background: linear-gradient(90deg, #2b59ff, #7b3eff);
+      gap: var(--spacing-2);
+      padding: var(--spacing-4) var(--spacing-8);
+      background: var(--gradient-primary);
       border: none;
-      border-radius: 1rem;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
+      border-radius: var(--radius-md);
+      color: var(--color-fg-primary);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
       cursor: pointer;
-      transition: opacity 0.3s, transform 0.3s;
+      transition: all var(--duration-base);
       animation: glow-breath 4s ease-in-out infinite;
     }
 
     .engage-btn:hover {
       opacity: 0.9;
       transform: translateY(-2px);
+      box-shadow: var(--shadow-glow-hover);
     }
 
     .engage-btn:active {
@@ -257,7 +858,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #2b59ff;
+      background: var(--color-accent-primary-500);
       box-shadow: 0 0 10px rgba(43, 89, 255, 0.7);
       animation: pulse 1.4s infinite ease-in-out;
     }
@@ -267,36 +868,36 @@
 
     .right-meta {
       margin-left: auto;
-      font-size: 0.875rem;
-      color: #cfcfcf;
+      font-size: var(--font-size-sm);
+      color: var(--color-fg-secondary);
     }
 
     .response-area {
-      margin-top: 2rem;
+      margin-top: var(--spacing-8);
     }
 
     .response-box {
       min-height: 140px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      color: white;
-      line-height: 1.6;
+      background: var(--backdrop-glass-medium);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-6);
+      color: var(--color-fg-primary);
+      line-height: var(--line-height-relaxed);
       overflow-x: auto;
       white-space: pre-wrap;
       word-wrap: break-word;
     }
 
     .response-box.empty {
-      color: rgba(207, 207, 207, 0.6);
+      color: var(--color-fg-disabled);
       font-style: italic;
     }
 
     /* Footer */
     footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 4rem 2rem;
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--spacing-16) var(--spacing-8);
       margin-top: auto;
     }
 
@@ -307,36 +908,40 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: var(--spacing-8);
     }
 
     .social-links {
       display: flex;
-      gap: 1rem;
+      gap: var(--spacing-4);
     }
 
     .social-link {
       width: 3rem;
       height: 3rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      background: var(--backdrop-glass-medium);
+      border: 1px solid var(--color-border-default);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s;
+      transition: all var(--duration-base);
       text-decoration: none;
-      color: #cfcfcf;
+      color: var(--color-fg-secondary);
     }
 
     .social-link:hover {
       background: rgba(255, 255, 255, 0.1);
-      border-color: #2b59ff;
-      color: #2b59ff;
+      border-color: var(--color-accent-primary-500);
+      color: var(--color-accent-primary-500);
     }
 
     /* Responsive */
     @media (max-width: 768px) {
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+
       .controls {
         flex-direction: column;
         align-items: stretch;
@@ -345,7 +950,7 @@
       .right-meta {
         width: 100%;
         text-align: left;
-        margin: 0.5rem 0 0;
+        margin: var(--spacing-2) 0 0;
       }
 
       .engage-btn {
@@ -353,37 +958,49 @@
         justify-content: center;
       }
 
-      textarea#core-input {
-        min-height: 140px;
+      .demo-controls {
+        flex-direction: column;
       }
 
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
+      .demo-button {
+        width: 100%;
       }
 
-      .console-head {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+      .workspace {
+        grid-template-columns: 1fr;
       }
+
+      .cad-sidebar {
+        width: 100%;
+        max-height: 200px;
+      }
+
+      .cad-viewport-wrapper {
+        flex-direction: column;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+      30% { transform: translateY(-4px); opacity: 1; }
     }
   </style>
 </head>
 
 <body>
   <!-- Navigation -->
-  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15, 15, 20, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-    <div style="max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
-      <a href="../index.html" style="font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: white; text-decoration: none; background: linear-gradient(90deg, #2b59ff, #7b3eff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">neuroscope</a>
-      <div style="display: flex; gap: 2rem; align-items: center;">
-        <a href="../index.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Home</a>
-        <a href="About.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">About</a>
-        <a href="Solutions.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Solutions</a>
-        <a href="Pricing.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Pricing</a>
-        <a href="Blog.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#2b59ff'" onmouseout="this.style.color='white'">Blog</a>
-        <a href="AI.html" style="color: #2b59ff; text-decoration: none; font-weight: 500;">AI</a>
-        <a href="Contact.html" style="padding: 0.5rem 1.5rem; background: linear-gradient(90deg, #2b59ff, #7b3eff); border-radius: 0.5rem; color: white; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Contact</a>
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-nav); background: var(--color-bg-overlay); backdrop-filter: var(--backdrop-blur-base); border-bottom: 1px solid var(--color-border-default);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: var(--spacing-4) var(--spacing-8); display: flex; justify-content: space-between; align-items: center;">
+      <a href="../index.html" style="font-family: var(--font-primary); font-size: 1.25rem; font-weight: var(--font-weight-bold); color: var(--color-fg-primary); text-decoration: none; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">neuroscope</a>
+      <div style="display: flex; gap: var(--spacing-8); align-items: center;">
+        <a href="../index.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium); transition: color var(--duration-base);" onmouseover="this.style.color='var(--color-accent-primary-500)'" onmouseout="this.style.color='var(--color-fg-primary)'">Home</a>
+        <a href="About.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium); transition: color var(--duration-base);" onmouseover="this.style.color='var(--color-accent-primary-500)'" onmouseout="this.style.color='var(--color-fg-primary)'">About</a>
+        <a href="Solutions.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium); transition: color var(--duration-base);" onmouseover="this.style.color='var(--color-accent-primary-500)'" onmouseout="this.style.color='var(--color-fg-primary)'">Solutions</a>
+        <a href="Pricing.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium); transition: color var(--duration-base);" onmouseover="this.style.color='var(--color-accent-primary-500)'" onmouseout="this.style.color='var(--color-fg-primary)'">Pricing</a>
+        <a href="Blog.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium); transition: color var(--duration-base);" onmouseover="this.style.color='var(--color-accent-primary-500)'" onmouseout="this.style.color='var(--color-fg-primary)'">Blog</a>
+        <a href="AI.html" style="color: var(--color-accent-primary-500); text-decoration: none; font-weight: var(--font-weight-medium);">AI</a>
+        <a href="Contact.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium); transition: color var(--duration-base);" onmouseover="this.style.color='var(--color-accent-primary-500)'" onmouseout="this.style.color='var(--color-fg-primary)'">Contact</a>
+        <span id="ns-auth" style="display:flex; align-items:center; --ns-auth-cta-bg: var(--gradient-primary); --ns-auth-cta-padding: var(--spacing-2) var(--spacing-6); --ns-auth-cta-radius: var(--radius-sm); --ns-auth-cta-color: var(--color-fg-primary); --ns-auth-cta-font-weight: var(--font-weight-semibold);"></span>
       </div>
     </div>
   </nav>
@@ -393,20 +1010,291 @@
     <section class="hero">
       <div>
         <div class="section-label">
-          neuroscope · Autonomous Intelligence
+          neuroscope · Multi-Field Workstation
         </div>
         <h1>
           <span class="gradient-text">INTERFACE ONLINE</span>
         </h1>
         <p>
-          NeuroScope Core — Adaptive Intelligence Node. Engage directly with the Core.
+          Code Editor • Terminal • CAD 3D Design • Cross-Domain Integration
         </p>
       </div>
     </section>
 
+    <!-- Modules Section -->
+    <section class="modules-section collapsible-section">
+      <div class="section-header" onclick="toggleSection('modules')">
+        <div class="section-header-title">
+          <span>Available Modules</span>
+        </div>
+        <div class="collapse-toggle" id="modules-toggle">−</div>
+      </div>
+      <div class="section-content" id="modules-content">
+        <div class="modules-grid" id="modules-grid">
+          <!-- Modules will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Workspace: Code Editor & Terminal -->
+    <section class="collapsible-section">
+      <div class="section-header" onclick="toggleSection('workspace')">
+        <div class="section-header-title">
+          <span>Code Editor & Terminal</span>
+        </div>
+        <div class="collapse-toggle" id="workspace-toggle">−</div>
+      </div>
+      <div class="section-content" id="workspace-content">
+        <div class="workspace">
+        <!-- Code Editor -->
+        <div class="code-editor-container">
+          <div class="editor-header">
+            <div class="editor-title">
+              <span>Code Editor</span>
+            </div>
+            <div class="editor-actions">
+              <button class="editor-btn" onclick="runCode()">Run</button>
+              <button class="editor-btn" onclick="clearEditor()">Clear</button>
+            </div>
+          </div>
+          <textarea id="code-editor" class="code-editor" placeholder="// Write your code here...
+// Example: 
+function calculateVolume(radius, height) {
+  return Math.PI * radius * radius * height;
+}
+
+console.log(calculateVolume(5, 10));">// Welcome to NeuroScope Code Editor
+// Try writing some code and click 'Run' to execute it
+
+function greet(name) {
+  return `Hello, ${name}! Welcome to NeuroScope.`;
+}
+
+console.log(greet('Developer'));
+
+// You can also use cross-domain integration:
+// await crossDomainIntegration.requestFunction('math', 'solveEquation', {...})
+</textarea>
+        </div>
+
+        <!-- Terminal -->
+        <div class="terminal-container">
+          <div class="terminal-header">
+            <div class="terminal-title">
+              <span>Terminal</span>
+            </div>
+          </div>
+          <div id="terminal-output" class="terminal-output">
+            <div class="terminal-line prompt">$ Welcome to NeuroScope Terminal</div>
+            <div class="terminal-line output">Type commands or use the code editor to execute code.</div>
+            <div class="terminal-line output">Try: help, clear, or execute code from the editor.</div>
+          </div>
+          <div class="terminal-input-container">
+            <span class="terminal-prompt">$</span>
+            <input type="text" id="terminal-input" class="terminal-input" placeholder="Enter command..." autocomplete="off">
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced CAD 3D Design Area -->
+    <section class="collapsible-section">
+      <div class="section-header" onclick="toggleSection('cad')">
+        <div class="section-header-title">
+          <span>CAD 3D Design Viewport</span>
+        </div>
+        <div class="collapse-toggle" id="cad-toggle">−</div>
+      </div>
+      <div class="section-content" id="cad-content">
+        <div class="cad-container">
+        <div class="cad-header">
+          <div class="cad-title">
+            <span>CAD 3D Design Viewport</span>
+          </div>
+          <div class="cad-toolbar">
+            <button class="cad-btn" onclick="addPrimitive('cube')">Cube</button>
+            <button class="cad-btn" onclick="addPrimitive('sphere')">Sphere</button>
+            <button class="cad-btn" onclick="addPrimitive('cylinder')">Cylinder</button>
+            <button class="cad-btn" onclick="addPrimitive('cone')">Cone</button>
+            <button class="cad-btn" onclick="addPrimitive('torus')">Torus</button>
+            <button class="cad-btn" onclick="addPrimitive('plane')">Plane</button>
+            <button class="cad-btn" onclick="deleteSelected()">Delete</button>
+            <button class="cad-btn" onclick="clearCAD()">Clear All</button>
+            <button class="cad-btn" onclick="exportGeometry()">Export</button>
+            <button class="cad-btn" onclick="toggleGrid()">Toggle Grid</button>
+          </div>
+        </div>
+        <div class="cad-viewport-wrapper">
+          <div id="cad-viewport" class="cad-viewport"></div>
+          <div class="cad-sidebar">
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Scene Objects</div>
+              <ul id="cad-object-list" class="cad-object-list"></ul>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Statistics</div>
+              <div class="cad-stats">
+                <div class="cad-stat">
+                  <div class="cad-stat-label">Objects</div>
+                  <div class="cad-stat-value" id="stat-objects">0</div>
+                </div>
+                <div class="cad-stat">
+                  <div class="cad-stat-label">Vertices</div>
+                  <div class="cad-stat-value" id="stat-vertices">0</div>
+                </div>
+                <div class="cad-stat">
+                  <div class="cad-stat-label">Faces</div>
+                  <div class="cad-stat-value" id="stat-faces">0</div>
+                </div>
+              </div>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">AI CAD Assistant</div>
+              <div class="cad-field">
+                <textarea id="cad-ai-prompt" placeholder="e.g., create a 100x50x5 bracket with four 6mm holes"></textarea>
+              </div>
+              <button class="cad-btn" onclick="generateCADWithAI()">Generate CAD</button>
+              <div style="font-size: var(--font-size-2xs); color: var(--color-fg-disabled); margin-top: var(--spacing-2);">
+                Uses cross-domain CAD → AI. Falls back to a local generator if backend is unavailable.
+              </div>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Sketch & Extrude</div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Plane</label>
+                <select id="sketch-plane">
+                  <option value="xy">XY</option>
+                  <option value="xz">XZ</option>
+                  <option value="yz">YZ</option>
+                </select>
+              </div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Width</label>
+                <input type="number" id="sketch-width" value="1" step="0.1">
+              </div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Height</label>
+                <input type="number" id="sketch-height" value="1" step="0.1">
+              </div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Radius</label>
+                <input type="number" id="sketch-radius" value="0.5" step="0.1">
+              </div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Extrude</label>
+                <input type="number" id="extrude-height" value="1" step="0.1">
+              </div>
+              <button class="cad-btn" onclick="extrudeRectangle()">Extrude Rectangle</button>
+              <button class="cad-btn" onclick="extrudeCircle()">Extrude Circle</button>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Patterns</div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Linear</label>
+                <input type="number" id="pattern-nx" value="3" step="1" min="1" style="max-width:64px;">
+                <input type="number" id="pattern-ny" value="1" step="1" min="1" style="max-width:64px;">
+                <input type="number" id="pattern-dx" value="1" step="0.1" style="max-width:64px;">
+                <input type="number" id="pattern-dy" value="1" step="0.1" style="max-width:64px;">
+              </div>
+              <button class="cad-btn" onclick="patternLinear()">Apply Linear Pattern</button>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Circular</label>
+                <input type="number" id="pattern-count" value="6" step="1" min="3" style="max-width:64px;">
+                <input type="number" id="pattern-radius" value="2" step="0.1" style="max-width:64px;">
+              </div>
+              <button class="cad-btn" onclick="patternCircular()">Apply Circular Pattern</button>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Shell / Fillet / Chamfer</div>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Shell (t)</label>
+                <input type="number" id="shell-thickness" value="0.1" step="0.05">
+              </div>
+              <button class="cad-btn" onclick="applyShell()">Apply Shell</button>
+              <div class="cad-field">
+                <label style="min-width: 80px;">Radius</label>
+                <input type="number" id="edge-radius" value="0.1" step="0.05">
+              </div>
+              <button class="cad-btn" onclick="applyFilletChamfer('fillet')">Fillet (approx)</button>
+              <button class="cad-btn" onclick="applyFilletChamfer('chamfer')">Chamfer (approx)</button>
+              <div style="font-size: var(--font-size-2xs); color: var(--color-fg-disabled); margin-top: var(--spacing-2);">
+                Fillet/Chamfer are approximate (bevel substitute) for demo purposes.
+              </div>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Import / Export</div>
+              <button class="cad-btn" onclick="exportGeometry()">Export JSON</button>
+              <button class="cad-btn" onclick="generateSTEP()">AI Generate STEP (beta)</button>
+              <div class="cad-field">
+                <input type="file" id="cad-import-file" accept=\"application/json\" onchange=\"importGeometryFromFile(event)\">
+              </div>
+            </div>
+            <div class="cad-sidebar-section">
+              <div class="cad-sidebar-title">Controls</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-fg-disabled); line-height: var(--line-height-relaxed);">
+                Left Click + Drag: Rotate<br>
+                Right Click + Drag: Pan<br>
+                Scroll: Zoom<br>
+                Click Object: Select
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="cad-info">FPS: <span id="cad-fps">60</span> | Objects: <span id="cad-object-count">0</span> | Selected: <span id="cad-selected">None</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration Demo Section -->
+    <section class="collapsible-section">
+      <div class="section-header" onclick="toggleSection('integration')">
+        <div class="section-header-title">
+          <span>Cross-Domain Integration Demo</span>
+        </div>
+        <div class="collapse-toggle" id="integration-toggle">−</div>
+      </div>
+      <div class="section-content" id="integration-content">
+        <div class="integration-demo">
+        <div class="section-label">Cross-Domain Integration Demo</div>
+        <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-6);">Test Module Communication</h2>
+        <div class="demo-controls">
+          <button class="demo-button" onclick="testIntegration('cad', 'math', 'calculateVolume')">
+            CAD → Math: Calculate Volume
+          </button>
+          <button class="demo-button" onclick="testIntegration('math', 'code', 'generateFunction')">
+            Math → Code: Generate Function
+          </button>
+          <button class="demo-button" onclick="testIntegration('biology', 'math', 'solveEquation')">
+            Biology → Math: Solve Equation
+          </button>
+          <button class="demo-button" onclick="testIntegration('code', 'math', 'solveEquation')">
+            Code → Math: Solve Equation
+          </button>
+          <button class="demo-button" onclick="testIntegration('cad', 'medical', 'overlayGeometry')">
+            CAD → Medical: Overlay Geometry
+          </button>
+          <button class="demo-button" onclick="testIntegration('math', 'protein', 'calculateStructure')">
+            Math → Protein: Calculate Structure
+          </button>
+        </div>
+          <div id="demo-result" class="demo-result">
+            Click a button above to test cross-domain integration...
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- AI Console Section -->
-    <section>
-      <div class="console-wrap">
+    <section class="collapsible-section">
+      <div class="section-header" onclick="toggleSection('console')">
+        <div class="section-header-title">
+          <span>AI Console</span>
+        </div>
+        <div class="collapse-toggle" id="console-toggle">−</div>
+      </div>
+      <div class="section-content" id="console-content">
+        <div class="console-wrap">
         <div class="console-head">
           <div class="console-title">
             <span class="status-dot"></span>
@@ -438,6 +1326,7 @@
             <div id="core-response" class="response-box empty">
               Core response will appear here.
             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -447,10 +1336,10 @@
     <footer>
       <div class="footer-content">
         <div>
-          <div class="section-label" style="margin-bottom: 0.5rem;">
+          <div class="section-label" style="margin-bottom: var(--spacing-2);">
             neuroscope · London · EST 2024
           </div>
-          <div style="font-size: 0.875rem; color: rgba(207, 207, 207, 0.6);">
+          <div style="font-size: var(--font-size-sm); color: var(--color-fg-disabled);">
             Autonomous intelligence systems
           </div>
         </div>
@@ -472,16 +1361,890 @@
         </div>
       </div>
       
-      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
-        <p style="font-size: 0.75rem; color: rgba(207, 207, 207, 0.4);">
+      <div style="margin-top: var(--spacing-12); padding-top: var(--spacing-8); border-top: 1px solid var(--color-border-default); text-align: center;">
+        <p style="font-size: var(--font-size-xs); color: var(--color-fg-disabled);">
           © 2026 neuroscope. All rights reserved. · Contact: mtaimur@neuroscopes.org
         </p>
       </div>
     </footer>
   </div>
 
+  <!-- Cross-Domain Integration API -->
+  <script src="../Integration/cross-domain-api.js"></script>
+  <script src="../Integration/auth-config.js"></script>
+  <script src="../Integration/auth.js"></script>
+
   <script>
-    // OpenAI API handler — replace with server proxy in production
+    // Module definitions
+    const modules = [
+      {
+        id: 'cad',
+        name: 'CAD Module',
+        description: 'Computer-Aided Design and 3D modeling with geometry export/import capabilities',
+        functions: ['exportGeometry', 'importGeometry', 'calculateVolume']
+      },
+      {
+        id: 'math',
+        name: 'Math Solver',
+        description: 'Mathematical computation, equation solving, derivatives, and integration',
+        functions: ['solveEquation', 'calculateDerivative', 'integrate', 'matrixOperations']
+      },
+      {
+        id: 'biology',
+        name: 'Biology Module',
+        description: 'Biological data analysis, sequence analysis, and population modeling',
+        functions: ['simulateReaction', 'analyzeSequence', 'modelPopulation']
+      },
+      {
+        id: 'code',
+        name: 'Code Module',
+        description: 'Code editor, execution engine, and function generation',
+        functions: ['executeCode', 'generateFunction', 'analyzeCode']
+      },
+      {
+        id: 'medical',
+        name: 'Medical Imaging',
+        description: 'Medical image processing, overlays, and measurement tools',
+        functions: ['loadImage', 'applyOverlay', 'measureDistance']
+      },
+      {
+        id: 'protein',
+        name: 'Protein Structure',
+        description: 'Protein structure modeling, folding analysis, and distance calculations',
+        functions: ['loadStructure', 'calculateDistance', 'analyzeFolding']
+      }
+    ];
+
+    // Render modules
+    function renderModules() {
+      const grid = document.getElementById('modules-grid');
+      grid.innerHTML = modules.map(module => `
+        <div class="module-card" data-module="${module.id}">
+          <div class="module-header">
+            <div>
+              <div class="module-title">${module.name}</div>
+            </div>
+          </div>
+          <div class="module-description">${module.description}</div>
+          <div class="module-functions">
+            ${module.functions.map(fn => `<span class="function-badge">${fn}</span>`).join('')}
+          </div>
+          <div class="module-status">
+            <span class="status-dot"></span>
+            Active
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Terminal functionality
+    const terminalOutput = document.getElementById('terminal-output');
+    const terminalInput = document.getElementById('terminal-input');
+    let terminalHistory = [];
+    let historyIndex = -1;
+
+    function addTerminalLine(text, type = 'output') {
+      const line = document.createElement('div');
+      line.className = `terminal-line ${type}`;
+      line.textContent = text;
+      terminalOutput.appendChild(line);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+
+    function executeTerminalCommand(command) {
+      addTerminalLine(`$ ${command}`, 'prompt');
+      
+      const cmd = command.trim().toLowerCase();
+      
+      if (cmd === 'clear' || cmd === 'cls') {
+        terminalOutput.innerHTML = '';
+        return;
+      }
+      
+      if (cmd === 'help') {
+        addTerminalLine('Available commands:', 'output');
+        addTerminalLine('  help - Show this help message', 'output');
+        addTerminalLine('  clear/cls - Clear terminal', 'output');
+        addTerminalLine('  modules - List available modules', 'output');
+        addTerminalLine('  run - Execute code from editor', 'output');
+        return;
+      }
+      
+      if (cmd === 'modules') {
+        addTerminalLine('Available modules:', 'output');
+        modules.forEach(m => {
+          addTerminalLine(`  ${m.id}: ${m.name}`, 'output');
+        });
+        return;
+      }
+      
+      if (cmd === 'run') {
+        runCode();
+        return;
+      }
+      
+      // Try to evaluate as JavaScript
+      try {
+        const result = eval(command);
+        addTerminalLine(String(result), 'output');
+      } catch (error) {
+        addTerminalLine(`Error: ${error.message}`, 'error');
+      }
+    }
+
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const command = terminalInput.value;
+        if (command.trim()) {
+          terminalHistory.push(command);
+          historyIndex = terminalHistory.length;
+          executeTerminalCommand(command);
+          terminalInput.value = '';
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex--;
+          terminalInput.value = terminalHistory[historyIndex];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < terminalHistory.length - 1) {
+          historyIndex++;
+          terminalInput.value = terminalHistory[historyIndex] || '';
+        } else {
+          historyIndex = terminalHistory.length;
+          terminalInput.value = '';
+        }
+      }
+    });
+
+    // Code Editor functionality
+    function runCode() {
+      const code = document.getElementById('code-editor').value;
+      if (!code.trim()) {
+        addTerminalLine('No code to execute', 'error');
+        return;
+      }
+      
+      addTerminalLine('Executing code...', 'output');
+      
+      // Capture console.log
+      const originalLog = console.log;
+      const logs = [];
+      console.log = (...args) => {
+        logs.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' '));
+        originalLog.apply(console, args);
+      };
+      
+      try {
+        // Create a safe execution context
+        const result = new Function(code)();
+        console.log = originalLog;
+        
+        if (logs.length > 0) {
+          logs.forEach(log => addTerminalLine(log, 'output'));
+        }
+        
+        if (result !== undefined) {
+          addTerminalLine(`Result: ${JSON.stringify(result, null, 2)}`, 'output');
+        }
+        
+        addTerminalLine('Code executed successfully', 'output');
+      } catch (error) {
+        console.log = originalLog;
+        addTerminalLine(`Error: ${error.message}`, 'error');
+        addTerminalLine(error.stack, 'error');
+      }
+    }
+
+    function clearEditor() {
+      document.getElementById('code-editor').value = '';
+      addTerminalLine('Editor cleared', 'output');
+    }
+
+    // Enhanced CAD 3D Viewer using Three.js
+    let cadScene, cadCamera, cadRenderer;
+    let cadObjects = [];
+    let selectedObject = null;
+    let raycaster, mouse;
+    let gridHelper;
+    let frameCount = 0;
+    let lastTime = performance.now();
+    let objectCounter = 0;
+    
+    // Custom Orbit Controls
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    let cameraDistance = 10;
+    let cameraAngleX = Math.PI / 4;
+    let cameraAngleY = Math.PI / 4;
+
+    function initCAD() {
+      const viewport = document.getElementById('cad-viewport');
+      const width = viewport.clientWidth;
+      const height = viewport.clientHeight;
+
+      // Scene
+      cadScene = new THREE.Scene();
+      cadScene.background = new THREE.Color(0x0a0a0f);
+
+      // Camera
+      cadCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+      cadCamera.position.set(5, 5, 5);
+      cadCamera.lookAt(0, 0, 0);
+
+      // Renderer
+      cadRenderer = new THREE.WebGLRenderer({ antialias: true });
+      cadRenderer.setSize(width, height);
+      cadRenderer.setPixelRatio(window.devicePixelRatio);
+      cadRenderer.shadowMap.enabled = true;
+      cadRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      viewport.appendChild(cadRenderer.domElement);
+
+      // Custom Orbit Controls Setup
+      setupOrbitControls();
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+      cadScene.add(ambientLight);
+
+      const directionalLight1 = new THREE.DirectionalLight(0x00d4ff, 0.8);
+      directionalLight1.position.set(5, 10, 5);
+      directionalLight1.castShadow = true;
+      directionalLight1.shadow.mapSize.width = 2048;
+      directionalLight1.shadow.mapSize.height = 2048;
+      cadScene.add(directionalLight1);
+
+      const directionalLight2 = new THREE.DirectionalLight(0x0099cc, 0.4);
+      directionalLight2.position.set(-5, -5, -5);
+      cadScene.add(directionalLight2);
+
+      // Grid helper
+      gridHelper = new THREE.GridHelper(20, 20, 0x00d4ff, 0x00d4ff);
+      gridHelper.material.opacity = 0.2;
+      gridHelper.material.transparent = true;
+      cadScene.add(gridHelper);
+
+      // Axes helper
+      const axesHelper = new THREE.AxesHelper(3);
+      cadScene.add(axesHelper);
+
+      // Raycaster for object selection
+      raycaster = new THREE.Raycaster();
+      mouse = new THREE.Vector2();
+
+      // Mouse events
+      cadRenderer.domElement.addEventListener('click', onCADClick);
+      cadRenderer.domElement.addEventListener('contextmenu', (e) => e.preventDefault());
+      
+      // Update camera position
+      updateCameraPosition();
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        const width = viewport.clientWidth;
+        const height = viewport.clientHeight;
+        cadCamera.aspect = width / height;
+        cadCamera.updateProjectionMatrix();
+        cadRenderer.setSize(width, height);
+      });
+
+      updateObjectList();
+      updateStats();
+      animateCAD();
+    }
+
+    function onCADClick(event) {
+      const rect = cadRenderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, cadCamera);
+      const intersects = raycaster.intersectObjects(cadObjects, true);
+
+      if (intersects.length > 0) {
+        selectObject(intersects[0].object);
+      } else {
+        selectObject(null);
+      }
+    }
+
+    function selectObject(obj) {
+      // Deselect previous
+      if (selectedObject) {
+        selectedObject.material.emissive.setHex(0x000000);
+      }
+
+      selectedObject = obj;
+
+      // Select new
+      if (selectedObject) {
+        selectedObject.material.emissive.setHex(0x004488);
+        document.getElementById('cad-selected').textContent = selectedObject.userData.name || 'Object';
+        updateObjectList();
+      } else {
+        document.getElementById('cad-selected').textContent = 'None';
+        updateObjectList();
+      }
+    }
+
+    function addPrimitive(type) {
+      let geometry, material, mesh;
+      const colors = {
+        cube: 0x00d4ff,
+        sphere: 0x0099cc,
+        cylinder: 0x00ffff,
+        cone: 0x0088cc,
+        torus: 0x00aaff,
+        plane: 0x0066aa
+      };
+
+      material = new THREE.MeshPhongMaterial({
+        color: colors[type] || 0x00d4ff,
+        emissive: 0x001122,
+        shininess: 100,
+        specular: 0x00d4ff
+      });
+
+      switch (type) {
+        case 'cube':
+          geometry = new THREE.BoxGeometry(1, 1, 1);
+          break;
+        case 'sphere':
+          geometry = new THREE.SphereGeometry(0.5, 32, 32);
+          break;
+        case 'cylinder':
+          geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+          break;
+        case 'cone':
+          geometry = new THREE.ConeGeometry(0.5, 1, 32);
+          break;
+        case 'torus':
+          geometry = new THREE.TorusGeometry(0.5, 0.2, 16, 100);
+          break;
+        case 'plane':
+          geometry = new THREE.PlaneGeometry(2, 2);
+          break;
+        default:
+          geometry = new THREE.BoxGeometry(1, 1, 1);
+      }
+
+      mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.position.set(
+        (Math.random() - 0.5) * 4,
+        (Math.random() - 0.5) * 4,
+        (Math.random() - 0.5) * 4
+      );
+      mesh.userData.name = `${type}_${++objectCounter}`;
+      mesh.userData.type = type;
+
+      cadScene.add(mesh);
+      cadObjects.push(mesh);
+      
+      updateObjectList();
+      updateStats();
+      addTerminalLine(`Added ${type} to CAD scene`, 'output');
+    }
+
+    function deleteSelected() {
+      if (selectedObject) {
+        cadScene.remove(selectedObject);
+        cadObjects = cadObjects.filter(obj => obj !== selectedObject);
+        selectedObject = null;
+        document.getElementById('cad-selected').textContent = 'None';
+        updateObjectList();
+        updateStats();
+        addTerminalLine('Deleted selected object', 'output');
+      } else {
+        addTerminalLine('No object selected', 'error');
+      }
+    }
+
+    function clearCAD() {
+      cadObjects.forEach(obj => cadScene.remove(obj));
+      cadObjects = [];
+      selectedObject = null;
+      document.getElementById('cad-selected').textContent = 'None';
+      updateObjectList();
+      updateStats();
+      addTerminalLine('CAD scene cleared', 'output');
+    }
+
+    function toggleGrid() {
+      gridHelper.visible = !gridHelper.visible;
+      addTerminalLine(`Grid ${gridHelper.visible ? 'enabled' : 'disabled'}`, 'output');
+    }
+
+    // Sketch & Extrude utilities
+    function extrudeRectangle() {
+      const plane = document.getElementById('sketch-plane').value;
+      const w = parseFloat(document.getElementById('sketch-width').value) || 1;
+      const h = parseFloat(document.getElementById('sketch-height').value) || 1;
+      const ext = parseFloat(document.getElementById('extrude-height').value) || 1;
+      const mesh = createBoxOnPlane(plane, w, h, ext);
+      cadScene.add(mesh);
+      cadObjects.push(mesh);
+      updateObjectList();
+      updateStats();
+      addTerminalLine(`Extruded rectangle ${w}x${h}x${ext} on ${plane.toUpperCase()} plane`, 'output');
+    }
+
+    function extrudeCircle() {
+      const plane = document.getElementById('sketch-plane').value;
+      const r = parseFloat(document.getElementById('sketch-radius').value) || 0.5;
+      const ext = parseFloat(document.getElementById('extrude-height').value) || 1;
+      const mesh = createCylinderOnPlane(plane, r, ext);
+      cadScene.add(mesh);
+      cadObjects.push(mesh);
+      updateObjectList();
+      updateStats();
+      addTerminalLine(`Extruded circle r=${r} h=${ext} on ${plane.toUpperCase()} plane`, 'output');
+    }
+
+    function createBoxOnPlane(plane, w, h, ext) {
+      let geom;
+      if (plane === 'xy') {
+        geom = new THREE.BoxGeometry(w, h, ext);
+      } else if (plane === 'xz') {
+        geom = new THREE.BoxGeometry(w, ext, h);
+      } else { // yz
+        geom = new THREE.BoxGeometry(ext, h, w);
+      }
+      const mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial({ color: 0x00d4ff, emissive: 0x001122 }));
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.userData.name = `extrude_rect_${++objectCounter}`;
+      mesh.userData.type = 'extrude_rect';
+      return mesh;
+    }
+
+    function createCylinderOnPlane(plane, radius, height) {
+      const geom = new THREE.CylinderGeometry(radius, radius, height, 32);
+      const mesh = new THREE.Mesh(geom, new THREE.MeshPhongMaterial({ color: 0x0099cc, emissive: 0x001122 }));
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.userData.name = `extrude_circle_${++objectCounter}`;
+      mesh.userData.type = 'extrude_circle';
+      if (plane === 'xz') mesh.rotation.x = Math.PI / 2;
+      if (plane === 'yz') mesh.rotation.z = Math.PI / 2;
+      return mesh;
+    }
+
+    // Patterns
+    function patternLinear() {
+      const source = selectedObject || cadObjects[cadObjects.length - 1];
+      if (!source) return addTerminalLine('Select an object to pattern', 'error');
+      const nx = Math.max(1, parseInt(document.getElementById('pattern-nx').value) || 1);
+      const ny = Math.max(1, parseInt(document.getElementById('pattern-ny').value) || 1);
+      const dx = parseFloat(document.getElementById('pattern-dx').value) || 1;
+      const dy = parseFloat(document.getElementById('pattern-dy').value) || 1;
+      for (let i = 0; i < nx; i++) {
+        for (let j = 0; j < ny; j++) {
+          if (i === 0 && j === 0) continue;
+          const clone = source.clone(true);
+          clone.position.x += i * dx;
+          clone.position.y += j * dy;
+          clone.userData.name = `${source.userData.type || 'obj'}_${++objectCounter}`;
+          cadScene.add(clone);
+          cadObjects.push(clone);
+        }
+      }
+      updateObjectList();
+      updateStats();
+      addTerminalLine(`Applied linear pattern (${nx} x ${ny})`, 'output');
+    }
+
+    function patternCircular() {
+      const source = selectedObject || cadObjects[cadObjects.length - 1];
+      if (!source) return addTerminalLine('Select an object to pattern', 'error');
+      const count = Math.max(3, parseInt(document.getElementById('pattern-count').value) || 6);
+      const radius = parseFloat(document.getElementById('pattern-radius').value) || 2;
+      for (let i = 0; i < count; i++) {
+        const angle = (i / count) * Math.PI * 2;
+        const clone = source.clone(true);
+        clone.position.x += Math.cos(angle) * radius;
+        clone.position.z += Math.sin(angle) * radius;
+        clone.userData.name = `${source.userData.type || 'obj'}_${++objectCounter}`;
+        cadScene.add(clone);
+        cadObjects.push(clone);
+      }
+      updateObjectList();
+      updateStats();
+      addTerminalLine(`Applied circular pattern (${count} @ r=${radius})`, 'output');
+    }
+
+    // Shell & Fillet/Chamfer (approx)
+    function applyShell() {
+      if (!selectedObject) return addTerminalLine('Select an object to shell', 'error');
+      const t = parseFloat(document.getElementById('shell-thickness').value) || 0.1;
+      selectedObject.scale.multiplyScalar(1);
+      selectedObject.userData.shell = t;
+      addTerminalLine(`Shell applied (approx) thickness ${t}`, 'output');
+    }
+
+    function applyFilletChamfer(mode) {
+      if (!selectedObject) return addTerminalLine('Select an object to modify', 'error');
+      const r = parseFloat(document.getElementById('edge-radius').value) || 0.1;
+      // Approximation: adjust material shininess/emissive to indicate edge treatment
+      selectedObject.material.shininess = Math.min(200, selectedObject.material.shininess + 20);
+      selectedObject.material.emissive.setHex(mode === 'fillet' ? 0x003366 : 0x332200);
+      selectedObject.userData.edgeMode = mode;
+      selectedObject.userData.edgeRadius = r;
+      addTerminalLine(`${mode === 'fillet' ? 'Fillet' : 'Chamfer'} applied (visual approximation) radius ${r}`, 'output');
+    }
+
+    function updateObjectList() {
+      const list = document.getElementById('cad-object-list');
+      list.innerHTML = cadObjects.map((obj, index) => `
+        <li class="cad-object-item ${obj === selectedObject ? 'selected' : ''}" 
+            onclick="selectObjectByIndex(${index})">
+          ${obj.userData.name || `Object ${index + 1}`}
+        </li>
+      `).join('');
+    }
+
+    function selectObjectByIndex(index) {
+      if (index >= 0 && index < cadObjects.length) {
+        selectObject(cadObjects[index]);
+      }
+    }
+
+    function updateStats() {
+      let vertices = 0;
+      let faces = 0;
+      
+      cadObjects.forEach(obj => {
+        if (obj.geometry) {
+          if (obj.geometry.attributes && obj.geometry.attributes.position) {
+            vertices += obj.geometry.attributes.position.count;
+          }
+          if (obj.geometry.index) {
+            faces += obj.geometry.index.count / 3;
+          } else if (obj.geometry.attributes && obj.geometry.attributes.position) {
+            faces += obj.geometry.attributes.position.count / 3;
+          }
+        }
+      });
+
+      document.getElementById('stat-objects').textContent = cadObjects.length;
+      document.getElementById('stat-vertices').textContent = vertices;
+      document.getElementById('stat-faces').textContent = Math.floor(faces);
+      document.getElementById('cad-object-count').textContent = cadObjects.length;
+    }
+
+    function setupOrbitControls() {
+      const canvas = cadRenderer.domElement;
+      
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+      });
+      
+      canvas.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+        
+        if (e.buttons === 1) { // Left click - rotate
+          cameraAngleY += deltaX * 0.01;
+          cameraAngleX += deltaY * 0.01;
+          cameraAngleX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, cameraAngleX));
+        } else if (e.buttons === 2) { // Right click - pan
+          const panSpeed = 0.01;
+          const right = new THREE.Vector3();
+          const up = new THREE.Vector3();
+          cadCamera.getWorldDirection(new THREE.Vector3());
+          right.setFromMatrixColumn(cadCamera.matrixWorld, 0);
+          up.setFromMatrixColumn(cadCamera.matrixWorld, 1);
+          right.multiplyScalar(-deltaX * panSpeed);
+          up.multiplyScalar(deltaY * panSpeed);
+          cadCamera.position.add(right);
+          cadCamera.position.add(up);
+        }
+        
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+        updateCameraPosition();
+      });
+      
+      canvas.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+      
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        cameraDistance += e.deltaY * 0.01;
+        cameraDistance = Math.max(1, Math.min(50, cameraDistance));
+        updateCameraPosition();
+      });
+    }
+
+    function updateCameraPosition() {
+      const x = cameraDistance * Math.cos(cameraAngleX) * Math.sin(cameraAngleY);
+      const y = cameraDistance * Math.sin(cameraAngleX);
+      const z = cameraDistance * Math.cos(cameraAngleX) * Math.cos(cameraAngleY);
+      
+      cadCamera.position.set(x, y, z);
+      cadCamera.lookAt(0, 0, 0);
+    }
+
+    function animateCAD() {
+      requestAnimationFrame(animateCAD);
+
+      // Rotate selected object
+      if (selectedObject) {
+        selectedObject.rotation.y += 0.01;
+      }
+
+      // Render
+      cadRenderer.render(cadScene, cadCamera);
+
+      // FPS counter
+      frameCount++;
+      const currentTime = performance.now();
+      if (currentTime >= lastTime + 1000) {
+        const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+        document.getElementById('cad-fps').textContent = fps;
+        frameCount = 0;
+        lastTime = currentTime;
+      }
+    }
+
+    async function exportGeometry() {
+      if (cadObjects.length === 0) {
+        addTerminalLine('No geometry to export', 'error');
+        return;
+      }
+      
+      try {
+        const geometryData = cadObjects.map((obj) => ({
+          name: obj.userData.name,
+          type: obj.userData.type,
+          position: { x: obj.position.x, y: obj.position.y, z: obj.position.z },
+          rotation: { x: obj.rotation.x, y: obj.rotation.y, z: obj.rotation.z },
+          scale: { x: obj.scale.x, y: obj.scale.y, z: obj.scale.z },
+          color: obj.material.color.getHex()
+        }));
+        
+        if (window.crossDomainIntegration) {
+          const result = await crossDomainIntegration.requestFunction(
+            'cad',
+            'exportGeometry',
+            {
+              format: 'json',
+              geometry: geometryData
+            }
+          );
+          addTerminalLine(`Geometry exported: ${JSON.stringify(result.result, null, 2)}`, 'output');
+        } else {
+          addTerminalLine(`Geometry data: ${JSON.stringify(geometryData, null, 2)}`, 'output');
+        }
+      } catch (error) {
+        addTerminalLine(`Export error: ${error.message}`, 'error');
+      }
+    }
+
+    async function generateSTEP() {
+      if (cadObjects.length === 0) {
+        return addTerminalLine('No geometry to export to STEP', 'error');
+      }
+      const geometryData = cadObjects.map((obj) => ({
+        name: obj.userData.name,
+        type: obj.userData.type,
+        position: { x: obj.position.x, y: obj.position.y, z: obj.position.z },
+        rotation: { x: obj.rotation.x, y: obj.rotation.y, z: obj.rotation.z },
+        scale: { x: obj.scale.x, y: obj.scale.y, z: obj.scale.z },
+        color: obj.material.color.getHex()
+      }));
+
+      try {
+        let stepText = '';
+        if (window.crossDomainIntegration) {
+          const result = await crossDomainIntegration.requestFunction('cad', 'generateSTEP', { geometry: geometryData });
+          stepText = (result && result.result && result.result.step) || JSON.stringify(result.result, null, 2);
+        } else {
+          stepText = `STEP-GENERATED (mock)\nObjects: ${geometryData.length}\n${JSON.stringify(geometryData, null, 2)}`;
+        }
+        const blob = new Blob([stepText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'neuroscope_model.step.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+        addTerminalLine('STEP (beta) generated and downloaded', 'output');
+      } catch (error) {
+        addTerminalLine(`STEP generation error: ${error.message}`, 'error');
+      }
+    }
+
+    function importGeometryFromFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!Array.isArray(data)) throw new Error('Invalid geometry JSON');
+          data.forEach(item => createMeshFromData(item));
+          updateObjectList();
+          updateStats();
+          addTerminalLine(`Imported ${data.length} objects`, 'output');
+        } catch (err) {
+          addTerminalLine(`Import error: ${err.message}`, 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function createMeshFromData(item) {
+      let geom;
+      switch (item.type) {
+        case 'sphere':
+          geom = new THREE.SphereGeometry(0.5, 32, 32);
+          break;
+        case 'cylinder':
+          geom = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+          break;
+        case 'cone':
+          geom = new THREE.ConeGeometry(0.5, 1, 32);
+          break;
+        case 'torus':
+          geom = new THREE.TorusGeometry(0.5, 0.2, 16, 100);
+          break;
+        case 'plane':
+          geom = new THREE.PlaneGeometry(2, 2);
+          break;
+        default:
+          geom = new THREE.BoxGeometry(1, 1, 1);
+      }
+      const material = new THREE.MeshPhongMaterial({
+        color: item.color || 0x00d4ff,
+        emissive: 0x001122,
+        shininess: 80,
+        specular: 0x00d4ff
+      });
+      const m = new THREE.Mesh(geom, material);
+      if (item.position) m.position.set(item.position.x, item.position.y, item.position.z);
+      if (item.rotation) m.rotation.set(item.rotation.x, item.rotation.y, item.rotation.z);
+      if (item.scale) m.scale.set(item.scale.x, item.scale.y, item.scale.z);
+      m.userData.name = item.name || `import_${++objectCounter}`;
+      m.userData.type = item.type || 'import';
+      m.castShadow = true;
+      m.receiveShadow = true;
+      cadScene.add(m);
+      cadObjects.push(m);
+      return m;
+    }
+
+    async function generateCADWithAI() {
+      const prompt = document.getElementById('cad-ai-prompt').value.trim();
+      if (!prompt) return addTerminalLine('Enter a prompt for AI CAD generation', 'error');
+
+      addTerminalLine(`AI CAD request: ${prompt}`, 'output');
+      try {
+        let result;
+        if (window.crossDomainIntegration) {
+          result = await crossDomainIntegration.requestFunction('cad', 'generateGeometry', { prompt });
+        }
+
+        // Fallback mock if no backend/empty result
+        const primitives = (result && result.result && result.result.primitives) || [
+          { type: 'cube', position: { x: 0, y: 0, z: 0 }, scale: { x: 2, y: 1, z: 0.5 }, name: 'ai_cube' },
+          { type: 'cylinder', position: { x: 1.5, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, name: 'ai_cyl' }
+        ];
+
+        primitives.forEach(item => {
+          const mesh = createMeshFromData(item);
+          // createMeshFromData removes internal push; ensure stats refreshed
+        });
+        updateObjectList();
+        updateStats();
+        addTerminalLine(`AI generated ${primitives.length} primitives`, 'output');
+      } catch (error) {
+        addTerminalLine(`AI CAD error: ${error.message}`, 'error');
+      }
+    }
+
+    // Test integration
+    async function testIntegration(sourceModule, targetModule, functionName) {
+      const resultDiv = document.getElementById('demo-result');
+      resultDiv.className = 'demo-result';
+      resultDiv.textContent = `Requesting ${sourceModule}.${functionName} → ${targetModule}...`;
+
+      try {
+        const result = await crossDomainIntegration.requestFunction(
+          targetModule,
+          functionName,
+          {
+            test: true,
+            source: sourceModule,
+            timestamp: new Date().toISOString()
+          }
+        );
+
+        resultDiv.className = 'demo-result success';
+        resultDiv.textContent = `Success\n\nModule: ${result.module}\nFunction: ${result.function}\nTimestamp: ${result.timestamp}\n\nResult:\n${JSON.stringify(result.result, null, 2)}`;
+        addTerminalLine(`Cross-domain request: ${sourceModule} → ${targetModule}.${functionName}`, 'output');
+      } catch (error) {
+        resultDiv.className = 'demo-result error';
+        resultDiv.textContent = `Error: ${error.message}\n\nThis is a demo. In production, modules would execute actual functions.`;
+        addTerminalLine(`Integration error: ${error.message}`, 'error');
+      }
+    }
+
+    // Collapsible section toggle
+    function toggleSection(sectionId) {
+      const content = document.getElementById(`${sectionId}-content`);
+      const toggle = document.getElementById(`${sectionId}-toggle`);
+      
+      if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        toggle.textContent = '−';
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.classList.add('collapsed');
+        toggle.textContent = '+';
+      }
+    }
+
+    // Initialize section max heights
+    function initializeSections() {
+      const sections = ['modules', 'workspace', 'cad', 'integration', 'console'];
+      sections.forEach(sectionId => {
+        const content = document.getElementById(`${sectionId}-content`);
+        if (content && !content.classList.contains('collapsed')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderModules();
+      
+      // Initialize CAD viewer
+      if (typeof THREE !== 'undefined') {
+        initCAD();
+      } else {
+        addTerminalLine('Warning: Three.js not loaded. CAD viewer unavailable.', 'error');
+      }
+      
+      // Ensure integration system is initialized
+      if (window.crossDomainIntegration) {
+        window.crossDomainIntegration.initialize();
+        addTerminalLine('Cross-domain integration system initialized', 'output');
+      }
+
+      // Initialize collapsible sections
+      setTimeout(initializeSections, 100);
+    });
+
+    // AI Chat functionality
     (function () {
       const textarea = document.getElementById('core-input');
       const engageBtn = document.getElementById('engage-btn');
@@ -489,8 +2252,11 @@
       const loading = document.getElementById('loading');
       const modelMeta = document.getElementById('model-meta');
 
-      const OPENAI_API_URL = 'http://localhost:3000/api/chat'; // Using proxy server
-      const OPENAI_MODEL = 'gemini-pro'; // Google Gemini
+      // GitHub Pages cannot run an API.
+      // If you deploy an API elsewhere, set:
+      //   window.NS_CHAT_API_URL = 'https://your-api.example.com/api/chat'
+      const OPENAI_API_URL = window.NS_CHAT_API_URL || '';
+      const OPENAI_MODEL = 'gemini-pro';
 
       function setLoading(isLoading) {
         engageBtn.disabled = isLoading;
@@ -511,6 +2277,12 @@
       async function engage() {
         const prompt = textarea.value.trim();
         if (!prompt) { textarea.focus(); return; }
+
+        if (!OPENAI_API_URL) {
+          render('AI console is not configured on this deployment. Set window.NS_CHAT_API_URL to an HTTPS endpoint.');
+          return;
+        }
+
         setLoading(true); render('');
 
         try {
@@ -522,7 +2294,7 @@
             messages: [
               {
                 role: 'system',
-                content: 'You are NeuroScope Core — a minimal, confident, visionary AI. Style: analytical, succinct, slightly sentient. Respond with clarity and provide action-ready insights when applicable.'
+                content: 'You are NeuroScope Core — a minimal, confident, visionary AI with access to cross-domain integration capabilities. You can coordinate between CAD, Math, Biology, Code, Medical, and Protein modules. Style: analytical, succinct, slightly sentient. Respond with clarity and provide action-ready insights when applicable.'
               },
               { role: 'user', content: prompt }
             ]
@@ -551,7 +2323,6 @@
         }
       }
 
-      // Keyboard: Enter to submit, Shift+Enter for newline
       textarea.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
@@ -565,3 +2336,4 @@
   </script>
 </body>
 </html>
+

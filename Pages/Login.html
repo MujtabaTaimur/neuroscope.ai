@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in - NeuroScope</title>
+  <meta name="theme-color" content="#0f0f14">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../DesignSystem/tokens.css">
+
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-secondary); }
+    h1, h2, h3 { font-family: var(--font-primary); }
+
+    body {
+      background: var(--color-bg-primary);
+      color: var(--color-fg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem var(--spacing-6) var(--spacing-12);
+    }
+
+    .card {
+      width: min(980px, 100%);
+      border-radius: var(--radius-xl);
+      background: var(--backdrop-glass-light);
+      border: 1px solid var(--color-border-default);
+      backdrop-filter: var(--backdrop-blur-base);
+      display: grid;
+      grid-template-columns: 1fr;
+      overflow: hidden;
+    }
+
+    @media (min-width: 960px) {
+      .card { grid-template-columns: 1.2fr 0.8fr; }
+    }
+
+    .left {
+      padding: var(--spacing-10);
+    }
+
+    .right {
+      padding: var(--spacing-10);
+      background: rgba(43, 89, 255, 0.04);
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--spacing-6);
+    }
+
+    .brand {
+      display: inline-block;
+      font-family: var(--font-primary);
+      font-size: 1.25rem;
+      font-weight: var(--font-weight-bold);
+      text-decoration: none;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title {
+      margin-top: var(--spacing-10);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: var(--line-height-tight);
+    }
+
+    .subtitle {
+      margin-top: var(--spacing-4);
+      color: var(--color-fg-secondary);
+      line-height: var(--line-height-relaxed);
+      max-width: 52ch;
+    }
+
+    .signin {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+      align-items: flex-start;
+      margin-top: var(--spacing-8);
+    }
+
+    .hint {
+      font-size: var(--font-size-sm);
+      color: var(--color-fg-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .pill {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      font-size: var(--font-size-xs);
+      color: var(--color-fg-secondary);
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .back {
+      display: inline-flex;
+      margin-top: var(--spacing-8);
+      color: var(--color-accent-primary-500);
+      text-decoration: none;
+      font-weight: var(--font-weight-semibold);
+    }
+  </style>
+</head>
+<body>
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-nav); background: var(--color-bg-overlay); backdrop-filter: var(--backdrop-blur-base); border-bottom: 1px solid var(--color-border-default);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: var(--spacing-4) var(--spacing-8); display: flex; justify-content: space-between; align-items: center;">
+      <a class="brand" href="../index.html">neuroscope</a>
+      <div style="display: flex; gap: var(--spacing-6); align-items: center;">
+        <a href="../index.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium);">Home</a>
+        <a href="AI.html" style="color: var(--color-fg-primary); text-decoration: none; font-weight: var(--font-weight-medium);">AI</a>
+        <span id="ns-auth" style="display:flex; align-items:center; --ns-auth-cta-bg: var(--gradient-primary); --ns-auth-cta-padding: var(--spacing-2) var(--spacing-6); --ns-auth-cta-radius: var(--radius-sm); --ns-auth-cta-color: var(--color-fg-primary); --ns-auth-cta-font-weight: var(--font-weight-semibold);"></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="left">
+        <a class="brand" href="../index.html">neuroscope</a>
+        <h1 class="title">Sign in to your workspace</h1>
+        <p class="subtitle">Sign in with your NeuroScope account. This page talks to the local auth endpoint by default.</p>
+
+        <div class="signin" style="width: min(420px, 100%);">
+          <form id="login-form" style="width: 100%; display: flex; flex-direction: column; gap: var(--spacing-4);">
+            <div style="display:flex; flex-direction: column; gap: 0.5rem;">
+              <label for="username" style="font-size: var(--font-size-sm); color: var(--color-fg-secondary); font-weight: var(--font-weight-semibold);">Username</label>
+              <input id="username" name="username" autocomplete="username" required
+                style="width: 100%; padding: var(--spacing-3) var(--spacing-4); border-radius: var(--radius-md); border: 1px solid var(--color-border-default); background: var(--backdrop-glass-medium); color: var(--color-fg-primary); outline: none;">
+            </div>
+            <div style="display:flex; flex-direction: column; gap: 0.5rem;">
+              <label for="password" style="font-size: var(--font-size-sm); color: var(--color-fg-secondary); font-weight: var(--font-weight-semibold);">Password</label>
+              <input id="password" name="password" type="password" autocomplete="current-password" required
+                style="width: 100%; padding: var(--spacing-3) var(--spacing-4); border-radius: var(--radius-md); border: 1px solid var(--color-border-default); background: var(--backdrop-glass-medium); color: var(--color-fg-primary); outline: none;">
+            </div>
+            <button id="login-submit" type="submit"
+              style="margin-top: var(--spacing-2); padding: var(--spacing-3) var(--spacing-6); border-radius: var(--radius-md); border: none; background: var(--gradient-primary); color: var(--color-fg-primary); font-weight: var(--font-weight-semibold); cursor: pointer;">
+              Sign in
+            </button>
+            <div id="login-error" class="hint" style="display:none; color: rgba(255, 107, 107, 0.9);"></div>
+        <div class="hint">This is a static-site login gate. Configure users in <span style="font-family: var(--font-mono);">Integration/auth-config.js</span>.</div>
+          </form>
+          <a class="back" href="../index.html">Back to home</a>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="pill">Cross-domain modules: CAD, Math, Biology, Code, Medical, Protein</div>
+        <div class="pill">Workstation: editor, terminal, 3D viewport, integration layer</div>
+        <div class="pill">Security note: server-side verification recommended for gated features</div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="../Integration/auth-config.js"></script>
+  <script src="../Integration/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.NeuroScopeAuth) return;
+
+      // If already authenticated, go to profile.
+      const existing = window.NeuroScopeAuth.getAuth();
+      if (existing && existing.user && existing.token) {
+        const url = new URL(window.location.href);
+        const next = url.searchParams.get('next');
+        window.location.href = next || 'Profile.html';
+        return;
+      }
+
+      const form = document.getElementById('login-form');
+      const err = document.getElementById('login-error');
+      const btn = document.getElementById('login-submit');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        err.style.display = 'none';
+        btn.disabled = true;
+        btn.style.opacity = '0.8';
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+          await window.NeuroScopeAuth.login(username, password);
+          const url = new URL(window.location.href);
+          const next = url.searchParams.get('next');
+          window.location.href = next || 'Profile.html';
+        } catch (e2) {
+          err.textContent = e2.message || 'Sign in failed';
+          err.style.display = 'block';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

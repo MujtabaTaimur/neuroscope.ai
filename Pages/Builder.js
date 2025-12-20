@@ -29,7 +29,7 @@ export default function Builder() {
       const isAuthenticated = await base44.auth.isAuthenticated();
       
       if (!isAuthenticated) {
-        toast.error("🔒 Please log in to use NeuroScopes AI Builder");
+        toast.error("Please log in to use NeuroScopes AI Builder");
         base44.auth.redirectToLogin(createPageUrl("Builder"));
         return;
       }
@@ -73,7 +73,7 @@ export default function Builder() {
     try {
       // Verify authentication
       if (!user) {
-        toast.error("🔒 Authentication required");
+        toast.error("Authentication required");
         base44.auth.redirectToLogin(createPageUrl("Builder"));
         return;
       }
